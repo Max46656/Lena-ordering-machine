@@ -29,6 +29,7 @@ Route::middleware([
         Route::get('/updateCart/{item}', 'CartController@updateCart')->name('updateCart');
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
+         Route::get('/showCart/{item}', 'CartController@showCart')->name('showCart');
         // 與其他在CartController的其他東西
 
     });
