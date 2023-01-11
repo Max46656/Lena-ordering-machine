@@ -2,19 +2,16 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
-use TCG\Voyager\Traits\VoyagerUser;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
 
-
-class User extends \TCG\Voyager\Models\User
+class JetStreamUser extends Authenticatable
 {
-    use VoyagerUser;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -27,6 +24,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
