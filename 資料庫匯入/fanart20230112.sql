@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-01-12 03:36:37
+-- 產生時間： 2023-01-12 07:24:09
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 8.1.2
 
@@ -21,15 +21,13 @@ SET time_zone = "+00:00";
 --
 -- 資料庫: `fanart`
 --
-CREATE DATABASE IF NOT EXISTS `fanart` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `fanart`;
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `data_rows`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `data_rows`;
@@ -60,13 +58,39 @@ CREATE TABLE `data_rows` (
 --
 
 TRUNCATE TABLE `data_rows`;
+--
+-- 傾印資料表的資料 `data_rows`
+--
+
+INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, `required`, `browse`, `read`, `edit`, `add`, `delete`, `details`, `order`) VALUES
+(1, 1, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(2, 1, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(3, 1, 'email', 'text', 'Email', 1, 1, 1, 1, 1, 1, NULL, 3),
+(4, 1, 'password', 'password', 'Password', 1, 0, 0, 1, 1, 0, NULL, 4),
+(5, 1, 'remember_token', 'text', 'Remember Token', 0, 0, 0, 0, 0, 0, NULL, 5),
+(6, 1, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, NULL, 6),
+(7, 1, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 7),
+(8, 1, 'avatar', 'image', 'Avatar', 0, 1, 1, 1, 1, 1, NULL, 8),
+(9, 1, 'user_belongsto_role_relationship', 'relationship', 'Role', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":0}', 10),
+(10, 1, 'user_belongstomany_role_relationship', 'relationship', 'Roles', 0, 1, 1, 1, 1, 0, '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}', 11),
+(11, 1, 'settings', 'hidden', 'Settings', 0, 0, 0, 0, 0, 0, NULL, 12),
+(12, 2, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(13, 2, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(14, 2, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
+(15, 2, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 4),
+(16, 3, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, NULL, 1),
+(17, 3, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, NULL, 2),
+(18, 3, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, NULL, 3),
+(19, 3, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, NULL, 4),
+(20, 3, 'display_name', 'text', 'Display Name', 1, 1, 1, 1, 1, 1, NULL, 5),
+(21, 1, 'role_id', 'text', 'Role', 1, 1, 1, 1, 1, 1, NULL, 9);
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `data_types`
 --
--- 建立時間： 2023-01-12 02:33:21
--- 最後更新： 2023-01-12 02:33:22
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `data_types`;
@@ -97,12 +121,21 @@ CREATE TABLE `data_types` (
 --
 
 TRUNCATE TABLE `data_types`;
+--
+-- 傾印資料表的資料 `data_types`
+--
+
+INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `display_name_plural`, `icon`, `model_name`, `policy_name`, `controller`, `description`, `generate_permissions`, `server_side`, `details`, `created_at`, `updated_at`) VALUES
+(1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31');
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `failed_jobs`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -130,7 +163,7 @@ TRUNCATE TABLE `failed_jobs`;
 --
 -- 資料表結構 `items`
 --
--- 建立時間： 2023-01-12 02:33:23
+-- 建立時間： 2023-01-12 05:59:14
 --
 
 DROP TABLE IF EXISTS `items`;
@@ -166,7 +199,7 @@ TRUNCATE TABLE `items`;
 --
 -- 資料表結構 `item_order`
 --
--- 建立時間： 2023-01-12 02:33:23
+-- 建立時間： 2023-01-12 05:59:14
 --
 
 DROP TABLE IF EXISTS `item_order`;
@@ -197,7 +230,7 @@ TRUNCATE TABLE `item_order`;
 --
 -- 資料表結構 `menus`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `menus`;
@@ -217,12 +250,19 @@ CREATE TABLE `menus` (
 --
 
 TRUNCATE TABLE `menus`;
+--
+-- 傾印資料表的資料 `menus`
+--
+
+INSERT INTO `menus` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2023-01-10 19:44:31', '2023-01-10 19:44:31');
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `menu_items`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `menu_items`;
@@ -253,13 +293,29 @@ CREATE TABLE `menu_items` (
 --
 
 TRUNCATE TABLE `menu_items`;
+--
+-- 傾印資料表的資料 `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
+(1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 1, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.dashboard', NULL),
+(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 5, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.media.index', NULL),
+(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 3, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.users.index', NULL),
+(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 2, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.roles.index', NULL),
+(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 9, '2023-01-10 19:44:31', '2023-01-10 19:44:31', NULL, NULL),
+(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 10, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.menus.index', NULL),
+(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 11, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.database.index', NULL),
+(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 12, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.compass.index', NULL),
+(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 13, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.bread.index', NULL),
+(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 14, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.settings.index', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `migrations`
 --
--- 建立時間： 2023-01-12 02:33:20
--- 最後更新： 2023-01-12 02:33:23
+-- 建立時間： 2023-01-12 05:54:13
+-- 最後更新： 2023-01-12 05:59:15
 --
 
 DROP TABLE IF EXISTS `migrations`;
@@ -309,18 +365,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2019_08_19_000000_create_failed_jobs_table', 1),
 (25, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (26, '2023_01_11_033751_create_sessions_table', 1),
-(27, '2023_01_11_145805_create_restaurants_table', 1),
-(28, '2023_01_11_145847_create_items_table', 1),
-(29, '2023_01_11_152450_create_orders_table', 1),
-(30, '2023_01_12_083700_create_reviews_table', 1),
-(31, '2023_01_12_084042_create_item_order_table', 1);
+(27, '2023_01_11_145805_create_restaurants_table', 2),
+(28, '2023_01_11_145847_create_items_table', 2),
+(29, '2023_01_11_152450_create_orders_table', 2),
+(30, '2023_01_12_083700_create_reviews_table', 2),
+(31, '2023_01_12_084042_create_item_order_table', 2);
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `orders`
 --
--- 建立時間： 2023-01-12 02:33:23
+-- 建立時間： 2023-01-12 05:59:14
 --
 
 DROP TABLE IF EXISTS `orders`;
@@ -350,7 +406,7 @@ TRUNCATE TABLE `orders`;
 --
 -- 資料表結構 `password_resets`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `password_resets`;
@@ -374,7 +430,7 @@ TRUNCATE TABLE `password_resets`;
 --
 -- 資料表結構 `permissions`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `permissions`;
@@ -395,12 +451,43 @@ CREATE TABLE `permissions` (
 --
 
 TRUNCATE TABLE `permissions`;
+--
+-- 傾印資料表的資料 `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`) VALUES
+(1, 'browse_admin', NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(2, 'browse_bread', NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(3, 'browse_database', NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(4, 'browse_media', NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(5, 'browse_compass', NULL, '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(6, 'browse_menus', 'menus', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(7, 'read_menus', 'menus', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(8, 'edit_menus', 'menus', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(9, 'add_menus', 'menus', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(10, 'delete_menus', 'menus', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(11, 'browse_roles', 'roles', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(12, 'read_roles', 'roles', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(13, 'edit_roles', 'roles', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(14, 'add_roles', 'roles', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(15, 'delete_roles', 'roles', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(16, 'browse_users', 'users', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(17, 'read_users', 'users', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(18, 'edit_users', 'users', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(19, 'add_users', 'users', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(20, 'delete_users', 'users', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(21, 'browse_settings', 'settings', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(22, 'read_settings', 'settings', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(23, 'edit_settings', 'settings', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(24, 'add_settings', 'settings', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(25, 'delete_settings', 'settings', '2023-01-10 19:44:31', '2023-01-10 19:44:31');
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `permission_role`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `permission_role`;
@@ -422,12 +509,43 @@ CREATE TABLE `permission_role` (
 --
 
 TRUNCATE TABLE `permission_role`;
+--
+-- 傾印資料表的資料 `permission_role`
+--
+
+INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1);
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `personal_access_tokens`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
@@ -458,7 +576,7 @@ TRUNCATE TABLE `personal_access_tokens`;
 --
 -- 資料表結構 `restaurants`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:14
 --
 
 DROP TABLE IF EXISTS `restaurants`;
@@ -492,7 +610,7 @@ TRUNCATE TABLE `restaurants`;
 --
 -- 資料表結構 `reviews`
 --
--- 建立時間： 2023-01-12 02:33:23
+-- 建立時間： 2023-01-12 05:59:14
 --
 
 DROP TABLE IF EXISTS `reviews`;
@@ -524,8 +642,7 @@ TRUNCATE TABLE `reviews`;
 --
 -- 資料表結構 `roles`
 --
--- 建立時間： 2023-01-12 02:33:21
--- 最後更新： 2023-01-12 02:34:07
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `roles`;
@@ -551,15 +668,16 @@ TRUNCATE TABLE `roles`;
 --
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Administrator', '2023-01-12 02:34:07', '2023-01-12 02:34:07');
+(1, 'admin', 'Administrator', '2023-01-10 19:44:31', '2023-01-10 19:44:31'),
+(2, 'user', 'Normal User', '2023-01-10 19:44:31', '2023-01-10 19:44:31');
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `sessions`
 --
--- 建立時間： 2023-01-12 02:33:21
--- 最後更新： 2023-01-12 02:34:16
+-- 建立時間： 2023-01-12 05:59:07
+-- 最後更新： 2023-01-12 06:22:43
 --
 
 DROP TABLE IF EXISTS `sessions`;
@@ -586,14 +704,16 @@ TRUNCATE TABLE `sessions`;
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('A1QoY5BnBqGxYwnq3kkqdbFBfodQNfSXVi1VXIaY', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoibkVhT1h5TmtTam1XRmNLbExObEhYS3VPMkJWMW5UbFpFeEtjSmZGdCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly9tYXguY29tOjY2Ni9mYW5hcnQvcHVibGljIjt9czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkVnEuUFBLNk84TGNNdnpqbnJoQUdwZU1SdzVkV3U0S0tQTDROeE55YUpxbTJRZUU1ZXJwa3kiO30=', 1673490856);
+('2bh4aeRyecJnmjtUaeALKujiJai26PdDTA9CyYqy', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiTk1FYVJIYkZFbjkwbkFMNWFia3RESG9PQUhqT1RQWFdQcmwwb1VVOCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbWF4LmNvbTo2NjYvZmFuYXJ0L3B1YmxpYy9hZG1pbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1673504563),
+('ETPoqIhjQhKKHTkqHxGaJEuUUOeCdXlS3BmgiFj8', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiNGlSY3NuTU41T2VRUWIwelZWUTZEdmtDcmVZcTZEbHllT1B3YlNLRSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vbWF4LmNvbTo2NjYvZmFuYXJ0L3B1YmxpYy9hZG1pbiI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1673503347),
+('jbmjMrm0Rwrt0sPLIaBiFvzRR1pL1mOEybZ4x6xM', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNk5GMDNQU2dVWHNqR3ZMRUhEa0pXNUZMRmYwUG1iOXQ0b1FoMk9WUyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMyOiJodHRwOi8vbWF4LmNvbTo2NjYvZmFuYXJ0L3B1YmxpYyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkY3ZTTjdyeWpVWGNzTFAyWUUuZFFvdXIuT2w0VnQ2YVNEdFo4Wk9RTWs1ZkhvVXRUVS81VDIiO30=', 1673503189);
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `settings`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `settings`;
@@ -617,12 +737,28 @@ CREATE TABLE `settings` (
 --
 
 TRUNCATE TABLE `settings`;
+--
+-- 傾印資料表的資料 `settings`
+--
+
+INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`, `group`) VALUES
+(1, 'site.title', 'Site Title', 'Site Title', '', 'text', 1, 'Site'),
+(2, 'site.description', 'Site Description', 'Site Description', '', 'text', 2, 'Site'),
+(3, 'site.logo', 'Site Logo', '', '', 'image', 3, 'Site'),
+(4, 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', '', '', 'text', 4, 'Site'),
+(5, 'admin.bg_image', 'Admin Background Image', '', '', 'image', 5, 'Admin'),
+(6, 'admin.title', 'Admin Title', 'Voyager', '', 'text', 1, 'Admin'),
+(7, 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', 2, 'Admin'),
+(8, 'admin.loader', 'Admin Loader', '', '', 'image', 3, 'Admin'),
+(9, 'admin.icon_image', 'Admin Icon Image', '', '', 'image', 4, 'Admin'),
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', '', '', 'text', 1, 'Admin');
+
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `translations`
 --
--- 建立時間： 2023-01-12 02:33:21
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `translations`;
@@ -651,8 +787,7 @@ TRUNCATE TABLE `translations`;
 --
 -- 資料表結構 `users`
 --
--- 建立時間： 2023-01-12 02:33:21
--- 最後更新： 2023-01-12 02:34:07
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -691,14 +826,15 @@ TRUNCATE TABLE `users`;
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `settings`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$Vq.PPK6O8LcMvzjnrhAGpeMRw5dWu4KKPL4NxNyaJqm2QeE5erpky', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-12 02:34:07', '2023-01-12 02:34:07');
+(1, 1, 'admin', 'admin@admin.com', 'users/default.png', NULL, '$2y$10$zrlua4/Pq5FcMddfQieuXuXTlea6tVuSlZX7fnIMMiOMBs.ki7SzG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-10 19:44:56', '2023-01-10 19:44:56'),
+(2, 2, 'User', 'user@user.com', 'users/default.png', NULL, '$2y$10$cvSN7ryjUXcsLP2YE.dQour.Ol4Vt6aSDtZ8ZOQMk5fHoUtTU/5T2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-10 19:45:50', '2023-01-10 19:45:50');
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `user_roles`
 --
--- 建立時間： 2023-01-12 02:33:22
+-- 建立時間： 2023-01-12 05:59:07
 --
 
 DROP TABLE IF EXISTS `user_roles`;
@@ -885,13 +1021,13 @@ ALTER TABLE `user_roles`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `failed_jobs`
@@ -915,13 +1051,13 @@ ALTER TABLE `item_order`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `migrations`
@@ -939,7 +1075,7 @@ ALTER TABLE `orders`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `personal_access_tokens`
@@ -963,13 +1099,13 @@ ALTER TABLE `reviews`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `translations`
@@ -981,7 +1117,7 @@ ALTER TABLE `translations`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 已傾印資料表的限制式
@@ -1044,7 +1180,436 @@ ALTER TABLE `users`
 ALTER TABLE `user_roles`
   ADD CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
+
+
+--
+-- 元資料
+--
+USE `phpmyadmin`;
+
+--
+-- 資料表 data_rows 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 data_types 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 failed_jobs 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 items 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 item_order 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 menus 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 menu_items 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 migrations 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 orders 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 password_resets 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 permissions 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 permission_role 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 personal_access_tokens 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 restaurants 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 reviews 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 roles 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 sessions 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 settings 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 translations 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 users 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料表 user_roles 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- 資料庫 fanart 的元資料
+--
+
+--
+-- 資料表新增資料前，先清除舊資料 `pma__bookmark`
+--
+
+TRUNCATE TABLE `pma__bookmark`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__relation`
+--
+
+TRUNCATE TABLE `pma__relation`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__savedsearches`
+--
+
+TRUNCATE TABLE `pma__savedsearches`;
+--
+-- 資料表新增資料前，先清除舊資料 `pma__central_columns`
+--
+
+TRUNCATE TABLE `pma__central_columns`;SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
