@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -30,10 +37,5 @@ Route::middleware([
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
         // 與其他在CartController的其他東西
-
     });
-
-});
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
 });

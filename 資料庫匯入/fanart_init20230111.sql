@@ -131,12 +131,14 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 13, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.bread.index', NULL),
 (10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 14, '2023-01-10 19:44:31', '2023-01-10 19:44:31', 'voyager.settings.index', NULL);
 
+/*
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 TRUNCATE TABLE `migrations`;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -166,7 +168,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2019_08_19_000000_create_failed_jobs_table', 1),
 (25, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (26, '2023_01_11_033751_create_sessions_table', 1);
-
+*/
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
