@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use TCG\Voyager\Traits\VoyagerUser;
 
-// use TCG\Voyager\Traits\VoyagerUser;
-
-class User extends \TCG\Voyager\Models\User
-
+class User extends Authenticatable
 {
-    // use VoyagerUser;
+    use VoyagerUser;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -26,6 +25,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
@@ -60,12 +60,4 @@ class User extends \TCG\Voyager\Models\User
     protected $appends = [
         'profile_photo_url',
     ];
-    public function Reviews()
-    {
-        return $this->hasMany(User::class);
-    }
-    public function Order()
-    {
-        return $this->hasMany(Order::class);
-    }
 }

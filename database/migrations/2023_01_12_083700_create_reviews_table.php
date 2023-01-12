@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('restaurant_menus', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id')->constrained();
-            $table->string('name', 50);
-            $table->integer('price')->default(0);
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('res_id')->constrained('restaurants');
+            $table->integer('rate');
+            $table->string('comment');
             $table->timestamps();
         });
     }
@@ -29,10 +30,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('restaurant_menus', function (Blueprint $table) {
-            $table->dropForeign(['restaurant_id']);
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['res_id']);
         });
-
-        Schema::dropIfExists('restaurant_menus');
+        Schema::dropIfExists('reviews');
     }
 };

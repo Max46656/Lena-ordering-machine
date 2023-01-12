@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Restaurant;
+use App\Models\Item;
 use Illuminate\Database\Seeder;
 
-class RestaurantSeeder extends Seeder
+class ItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class RestaurantSeeder extends Seeder
      */
     public function run()
     {
-        Restaurant::truncate();
-        Restaurant::truncate();
-        Restaurant::factory()->count(6)->create();
+        Item::truncate();
+        Item::truncate();
+        Item::factory()->count(100)->create();
     }
 }

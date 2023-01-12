@@ -11,7 +11,7 @@ class AdminController extends Controller
     }
     public function addMenu()
     {
-        return redirect('/admin/restaurant-menus/create');
+        return redirect('/admin/items/create');
 
     }
 }

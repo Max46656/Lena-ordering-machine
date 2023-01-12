@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -22,7 +28,7 @@ Route::middleware([
     })->name('dashboard');
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/', 'SiteController@index')->name('index');
-        Route::get('/menu/{id}', 'SiteController@Menu')->name("getMenu");
+        Route::get('/menu/{item}', 'SiteController@getMenu')->name("getMenu");
         Route::get('/get-menu', 'SiteController@getOrder');
         Route::get('/add-cart', 'SiteController@addCart')->name('addCart');
         Route::get('/carts', 'SiteController@cartPage');
@@ -41,13 +47,9 @@ Route::middleware([
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
         // 與其他在CartController的其他東西
-
     });
 
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-});
-Route::get('/menu', function () {
-    return view('menu');
 });

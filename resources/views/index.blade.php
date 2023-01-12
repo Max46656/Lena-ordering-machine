@@ -21,7 +21,7 @@
               " class="col-12 col-md-6 text-center wow hinge">
       <div class="pro mb-4">
         <div class="spro">
-          <a href="{{ route('getMenu',[$item->id]) }}" target="_blank">{{$item->title}}</a>
+          <a href="{{ route('getMenu',['item'=>$item->id]) }}" target="_blank">{{$item->title}}</a>
           <p>
             電話:{{$item->tel}}
           </p>
