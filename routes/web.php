@@ -21,6 +21,13 @@ Route::middleware([
     })->name('dashboard');
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/', 'SiteController@index')->name('index');
+        Route::get('/add-resturant', 'SiteController@addResturant');
+        Route::get('/add-menu', 'SiteController@addMenu');
+        Route::get('/menu/{id}', 'SiteController@Menu');
+        Route::get('/get-menu', 'SiteController@getMenu');
+        Route::get('/add-cart', 'SiteController@addCart');
+        Route::get('/carts', 'SiteController@cartPage');
+
         // 與其他在SiteController的其他東西
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
@@ -36,4 +43,7 @@ Route::middleware([
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+Route::get('/menu', function () {
+    return view('menu');
 });
