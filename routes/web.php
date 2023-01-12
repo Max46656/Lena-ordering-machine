@@ -1,4 +1,5 @@
 <?php
+use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,14 +22,17 @@ Route::middleware([
     })->name('dashboard');
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/', 'SiteController@index')->name('index');
-        Route::get('/add-resturant', 'SiteController@addResturant');
-        Route::get('/add-menu', 'SiteController@addMenu');
-        Route::get('/menu/{id}', 'SiteController@Menu');
-        Route::get('/get-menu', 'SiteController@getMenu');
-        Route::get('/add-cart', 'SiteController@addCart');
+        Route::get('/menu/{id}', 'SiteController@Menu')->name("getMenu");
+        Route::get('/get-menu', 'SiteController@getOrder');
+        Route::get('/add-cart', 'SiteController@addCart')->name('addCart');
         Route::get('/carts', 'SiteController@cartPage');
 
         // 與其他在SiteController的其他東西
+    });
+    Route::namespace ('App\Http\Controllers')->group(function () {
+        Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
+        Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
+
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/cart', 'CartController@cartPage');

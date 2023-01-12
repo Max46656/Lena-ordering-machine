@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resturant_menus', function (Blueprint $table) {
+        Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('resturant_id')->constrained();
-            $table->string('name', 50);
-            $table->integer('price')->default(0);
+            $table->string('title', 50);
+            $table->string('tel', 50);
+            $table->string('address', 120);
+            $table->string('cover')->nullable();
+            $table->string('menu')->nullable();
+
             $table->timestamps();
         });
     }
@@ -29,10 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('resturant_menus', function (Blueprint $table) {
-            $table->dropForeign(['resturant_id']);
-        });
-
-        Schema::dropIfExists('resturant_menus');
+        Schema::dropIfExists('restaurants');
     }
 };

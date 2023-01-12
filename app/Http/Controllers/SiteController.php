@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resturant;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,27 +10,17 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $items = Resturant::get();
+        $items = Restaurant::get();
         return view('index', compact('items'));
-    }
-    public function addResturant()
-    {
-        return redirect('/admin/resturants/create');
-
-    }
-    public function addMenu()
-    {
-        return redirect('/admin/resturant-menus/create');
-
     }
     public function Menu($id)
     {$resId = $id;
-        $res = Resturant::find($id);
-        $menus = $res->resturant_menus;
+        $res = Restaurant::find($id);
+        $menus = $res->restaurant_menus;
         return view('menu', compact('menus', 'resId'));
 
     }
-    public function getMenu(Request $request)
+    public function getOrder(Request $request)
     {
         dd($request->all());
     }
@@ -42,7 +32,7 @@ class SiteController extends Controller
     }
     public function addCart(Request $request)
     {
-        $resturant = Resturant::find($request->resId);
+        $Restaurant = Restaurant::find($request->resId);
         for ($i = 0; $i < count($request->id); $i++) {
             # code...
 
@@ -52,7 +42,7 @@ class SiteController extends Controller
                 'price' => $request->price[$i],
                 'quantity' => $request->quantity[$i],
                 'attributes' => [],
-                'associatedModel' => $resturant,
+                'associatedModel' => $Restaurant,
             ]);
         }
         return redirect(url('carts'));

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\ResturantMenu;
+use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Resturant extends Model
+class RestaurantMenu extends Model
 {
-    public function resturant_menus()
+    public function restaurant()
     {
-        return $this->hasMany(ResturantMenu::class);
+        return $this->belongsTo(Restaurant::class);
     }
     use HasFactory;
 }
