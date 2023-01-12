@@ -29,11 +29,21 @@ Route::middleware([
         Route::get('/updateCart/{item}', 'CartController@updateCart')->name('updateCart');
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
-        // 與其他在CartController的其他東西
+        Route::namespace ('App\Http\Controllers\Api\MailController')->group(function () {
+    Route::get('/feedback', function () {
+    return view('feedback');
+});
+        
 
+    });
+    Route::namespace ('App\Http\Controllers\Api\MailController')->group(function () {
+        Route::get('/feedback', function () {
+        return view('feedback');
     });
 
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+});
 });
