@@ -8,8 +8,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-// use TCG\Voyager\Traits\VoyagerUser;
-
 class User extends \TCG\Voyager\Models\User
 
 {

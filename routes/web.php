@@ -30,23 +30,19 @@ Route::middleware([
         Route::get('/', 'SiteController@index')->name('index');
         Route::get('/menu/{id}', 'SiteController@getMenu')->name('getMenu');
         Route::get('/getOrder', 'SiteController@getOrder');
-        Route::get('/carts', 'SiteController@cartPage');
-
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
         Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
-
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
-        Route::get('/cart', 'CartController@cartPage');
-        Route::post('/addCart', 'SiteController@addCart')->name('addCart');
-        // Route::get('/addCart/{item}', 'CartController@addCart')->name('addCart');
-        Route::get('/updateCart/{item}', 'CartController@updateCart')->name('updateCart');
+        Route::get('/cart', 'CartController@cartPage')->name('CartPage');
+        Route::post('/addCart', 'CartController@addCart')->name('addCart');
+        Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
+        Route::get('/showCart/{item}', 'CartController@showCart')->name('showCart');
     });
-
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

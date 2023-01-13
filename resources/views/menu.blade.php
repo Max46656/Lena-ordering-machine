@@ -1,12 +1,19 @@
 @extends('layouts.master')
 @section('content')
 <div class="card container">
-
+  <div>
+    <a href="{{ route('clearCart') }}"><button>清除購物車</button></a>
+    <a href="{{ route('CartPage') }}"><button>目前購物車</button></a>
+  </div>
+  @php
+  if (\Cart::session(Auth::user()->id)->getTotal()==0) {
+  $fromAction=route('addCart');
+  }else {
+  $fromAction=route('updateCart');
+  }
+  @endphp
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-
-    <form action="{{ route('addCart') }}" method="post">
+    <form action="{{ $fromAction }}" method="post">
       <input type="hidden" name="resId" value="{{$resId}}">
       @csrf
       <table class="table">
@@ -21,11 +28,10 @@
         <tbody>
           @foreach ($items as $menu)
           <tr>
-            <th><input type="hidden" name="id[]" value="{{$menu->id}}">{{$menu->id}}</th>
+            <th><input type="number" name="id[]" value="{{$menu->id}}" style="display:none">{{$menu->id}}</th>
             <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>
-            <th><input type="hidden" name="price[]" value="{{$menu->price}}">{{$menu->price}}</th>
+            <th><input type="number" name="price[]" value="{{$menu->price}}" style="display:none">{{$menu->price}}</th>
             <th><input type="number" name="quantity[]" id=""></th>
-
           </tr>
           @endforeach
 
@@ -38,10 +44,10 @@
 {{-- <div class='blurbg' style='background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(asset('
   imge/bg.jpg'));'>
 </div> --}}
-<div class="l2d_xb">
+{{-- <div class="l2d_xb">
   <div class="l2d">
     <div class="l2d-text" style="display: block; opacity: 0.0244717;"></div>
     <canvas id="live2d" width="220" height="250" class="live2d"></canvas>
   </div>
-</div>
+</div> --}}
 @endsection
