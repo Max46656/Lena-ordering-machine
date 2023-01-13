@@ -28,6 +28,8 @@
         <tbody>
           @foreach ($items as $menu)
           <tr>
+            <th><img src="{{ url(Voyager::image($menu->cover)) }}" class="img-fluid" alt="" srcset=""
+                style="width: 100px; height: auto" /></th>
             <th><input type="number" name="id[]" value="{{$menu->id}}" style="display:none">{{$menu->id}}</th>
             <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>
             <th><input type="number" name="price[]" value="{{$menu->price}}" style="display:none">{{$menu->price}}</th>

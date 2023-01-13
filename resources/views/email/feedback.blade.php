@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Order</title>
+  <title>Feeback</title>
 
   <!-- Bootstrap CDN-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -54,66 +54,30 @@
 </head>
 
 <body>
-  <div>
-    <a href="{{ route('clearCart') }}"><button>清除購物車</button></a>
-    <a href="{{ url()->previous() }}"><button>回菜單修改</button></a>
-  </div>
-  <table>
-    <tbody>
-      @php
-      $content="";
-      @endphp
-      @foreach ($cart as $item)
-      <tr>
-        <td>
-          名稱:{{$item->name}}<br>
-          價格:{{$item->price}}<br>
-          數量:{{$item->quantity}}<br>
-          小記:{{$item->quantity*$item->price}}<br>
-        </td>
-      </tr>
-      @php
-      $content.="名稱:".$item->name."。";
-      $content.="價格:".$item->price."。";
-      $content.="數量:".$item->quantity."。";
-      $content.="小記:".$item->quantity*$item->price."。";
-      $content.="<br>";
-      @endphp
-      @endforeach
-      @php
-      $content.="總額:".$total."。";
-      $content.="<br>";
-      $content.="點餐時間".date("h:i:sa")."。";
-      @endphp
-      <tr>
-        <td>總價{{$total}}</td>
-      </tr>
-    </tbody>
-  </table>
   <div class="container-fluid page">
-    <form class="form-group" id="Order">
-      <div class="title">Order</div>
-      <input class="form-control" type="text" name="name" value="{{$name}}" style="display:none" />
-      <input class="form-control" type="text" name="email" value="{{$email}}" style="display:none" />
-      <textarea class="form-control" name="content" style="display:none" />{{$content}}</textarea>
+    <form class="form-group" id="feedback">
+      <div class="title">Feedback</div>
+      <input class="form-control" type="text" name="name" placeholder="Name" />
+      <input class="form-control" type="text" name="email" placeholder="Email" />
+      <textarea class="form-control" name="content" cols="50" rows="10" placeholder="Feeback"></textarea>
       <button class="btn btn-primary">
         Send
         <i class="fa fa-spinner fa-spin"></i>
       </button>
     </form>
 
-    <div class="success">Thank you for your Order!</div>
+    <div class="success">Thank you for your feedback!</div>
   </div>
 </body>
 
 <script>
   $('.success').hide();
     $('.fa-spin').hide();
-    $('#Order').submit(function(event){
+    $('#feedback').submit(function(event){
         event.preventDefault();
         $('.fa-spin').show();
-        $.post('{{ url("/api/sendmail") }}',$("#Order").serialize(),function(data){
-            $('#Order').hide();
+        $.post('{{ url("/api/sendmail") }}',$("#feedback").serialize(),function(data){
+            $('#feedback').hide();
             $('.success').show();
         })
     })

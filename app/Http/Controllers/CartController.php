@@ -13,9 +13,11 @@ class CartController extends Controller
 {
     public function cartPage()
     {
+        $name = Auth::user()->name;
+        $email = Auth::user()->email;
         $cart = \Cart::session(Auth::user()->id)->getContent();
         $total = \Cart::session(Auth::user()->id)->getTotal();
-        return view('Cart', compact('cart', 'total'));
+        return view('cart', compact('name', 'email', 'cart', 'total'));
     }
 
     public function addCart(Request $request)
@@ -63,7 +65,7 @@ class CartController extends Controller
         \Cart::session(Auth::user()->id)->clear();
         return redirect(url('cart'));
     }
-    public function removeCartItem(Item $item)
+    protected function removeCartItem(Item $item)
     {
         \Cart::session(Auth::user()->id)->remove($item->id);
         return "removeCartItem";

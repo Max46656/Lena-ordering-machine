@@ -12,8 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+// Route::get('/send', function () {
+//     return view('feedback');
+// });
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/Duty', function () {
+    $allPerson = ['bgirl0123456789@gmail.com' => 0, 'maxfromsea36@gmail.com' => 1];
+    $PersonOnDuty = array_rand($allPerson);
+
+    return dd($PersonOnDuty);
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
@@ -41,7 +50,6 @@ Route::middleware([
         Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
-        Route::get('/showCart/{item}', 'CartController@showCart')->name('showCart');
     });
 });
 Route::group(['prefix' => 'admin'], function () {

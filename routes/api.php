@@ -17,4 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/sendmail', 'App\Http\Controllers\Api\MailController@sendMail')->name('sendmail');
+
+Route::post('/sendmail', 'App\Http\Controllers\Api\MailController@sendMail')->name('sendMail');
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::post('/sendmail', 'App\Http\Controllers\Api\MailController@sendMail')->name('sendmail');
+// });
