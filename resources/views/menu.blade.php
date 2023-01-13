@@ -6,7 +6,7 @@
     <h5 class="card-title">Card title</h5>
     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
 
-    <form action="{{ route('addCart') }}" method="get">
+    <form action="{{ route('addCart') }}" method="post">
       <input type="hidden" name="resId" value="{{$resId}}">
       @csrf
       <table class="table">
@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($menus as $menu)
+          @foreach ($items as $menu)
           <tr>
             <th><input type="hidden" name="id[]" value="{{$menu->id}}">{{$menu->id}}</th>
             <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>

@@ -18,7 +18,7 @@ class RestaurantFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'cover' => 'restaurants/餐廳 (' . rand(1, 7) . ').jpg',
+            'cover' => 'restaurants/餐廳 (' . rand(1, 10) . ').jpg',
             'tel' => $this->faker->phoneNumber,
             'address' => $this->faker->streetAddress,
         ];

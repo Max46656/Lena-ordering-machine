@@ -9,11 +9,11 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    public function Items()
+    public function items()
     {
         return $this->hasMany(Item::class);
     }
-    public function Reviews()
+    public function reviews()
     {
         return $this->hasMany(Review::class);
     }

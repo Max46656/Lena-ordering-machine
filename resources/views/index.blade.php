@@ -21,16 +21,21 @@
               " class="col-12 col-md-6 text-center wow hinge">
       <div class="pro mb-4">
         <div class="spro">
-          <a href="{{ route('getMenu',['item'=>$item->id]) }}" target="_blank">{{$item->title}}</a>
-          <p>
-            電話:{{$item->tel}}
-          </p>
-          <p>
-            地址:{{$item->address}}
-          </p>
+          <a href="{{ route('getMenu',['id'=>$item->id]) }}" target="_blank">
+            <p>
+              {{$item->name}}
+            </p>
+            <p>
+              {{-- url('/menu/'.$item->id) --}}
+              電話:{{$item->tel}}
+            </p>
+            <p>
+              地址:{{$item->address}}
+            </p>
         </div>
-        <img src="{{ Voyager::image($item->cover) }}" class="img-fluid" alt="" srcset=""
+        <img src="{{ url(Voyager::image($item->cover)) }}" class="img-fluid" alt="" srcset=""
           style="width: 500px; height: 400px" />
+        </a>
       </div>
     </div>
     @endforeach

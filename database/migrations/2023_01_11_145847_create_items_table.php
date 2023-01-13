@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id')->constrained('restaurants');
-            $table->string("name");
+            $table->foreignId('restaurant_id')->constrained();
+            $table->string('name');
             $table->integer('price')->default(0);
             $table->string('cover')->nullable();
             $table->boolean('enabled')->default(true);
@@ -34,7 +34,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->dropForeign(['res_id']);
+            $table->dropForeign(['restaurant_id']);
         });
         Schema::dropIfExists('items');
     }
