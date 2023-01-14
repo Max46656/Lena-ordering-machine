@@ -28,5 +28,20 @@ class SiteController extends Controller
     {
         dd($request->all());
     }
+    public function wrongMenu()
+    {
+        $restaurant = Restaurant::find(session('restaurant'));
+        flash('今天的餐廳是‘' . $restaurant->name . '’!!')->error();
+        $items = Restaurant::get();
+        return view('index', compact('items'));
+
+    }
+    public function oreadyOrder()
+    {
+        flash('你已經點過了’!!')->error();
+        $items = Restaurant::get();
+        return view('index', compact('items'));
+
+    }
 
 }

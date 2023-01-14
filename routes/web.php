@@ -1,4 +1,6 @@
 <?php
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,9 @@ Route::middleware([
         Route::get('/', 'SiteController@index')->name('index');
         Route::get('/menu/{id}', 'SiteController@getMenu')->name('getMenu');
         Route::get('/getOrder', 'SiteController@getOrder');
+        Route::get('/wrongMenu', 'SiteController@wrongMenu');
+        Route::get('/oreadyOrder', 'SiteController@oreadyOrder')->name('oreadyOrder');
+
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
         Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
@@ -50,8 +55,17 @@ Route::middleware([
         Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
         Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
         Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
+        Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
+        Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
+
     });
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+Route::get('/session', function (Request $request) {
+    return $request->session()->all();
+});
+Route::get('/carbon', function () {
+    return date('y-m-d');
 });

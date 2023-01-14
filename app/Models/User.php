@@ -11,7 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends \TCG\Voyager\Models\User
 
 {
-    // use VoyagerUser;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -58,12 +57,8 @@ class User extends \TCG\Voyager\Models\User
     protected $appends = [
         'profile_photo_url',
     ];
-    public function Reviews()
+    public function items()
     {
-        return $this->hasMany(User::class);
-    }
-    public function Order()
-    {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(Item::class);
     }
 }

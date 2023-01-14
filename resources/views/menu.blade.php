@@ -33,7 +33,7 @@
             <th><input type="number" name="id[]" value="{{$menu->id}}" style="display:none">{{$menu->id}}</th>
             <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>
             <th><input type="number" name="price[]" value="{{$menu->price}}" style="display:none">{{$menu->price}}</th>
-            <th><input type="number" name="quantity[]" id=""></th>
+            <th><livewire:counter /></th>
           </tr>
           @endforeach
 
