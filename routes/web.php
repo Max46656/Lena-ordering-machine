@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Review;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
@@ -55,9 +56,15 @@ Route::middleware([
         Route::post('/storeEvaluate', 'EvaluateController@storeEvaluate');
         Route::get('/editEvaluate/{res_id}/{user_id}', 'EvaluateController@editEvaluate');
         Route::post('/updateEvaluate/{res_id}/{user_id}', 'EvaluateController@updateEvaluate');
-        Route::get('/addFavoriteRestaurant', 'EvaluateController@addFavoriteRestaurant');
-        Route::get('/deleteFavoriteRestaurant', 'EvaluateController@deleteFavoriteRestaurant');
+
     });
+    Route::namespace ('App\Http\Controllers')->group(function () {
+        Route::get('/addFavoriteRestaurant', 'FavoriteController@addFavoriteRestaurant');
+        Route::get('/deleteFavoriteRestaurant', 'FavoriteController@deleteFavoriteRestaurant');
+        Route::get('/favoriteRestaurant', 'FavoriteController@favoriteRestaurant');
+
+    });
+
 });
 Route::namespace ('App\Http\Controllers')->group(function () {
     Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
@@ -90,12 +97,17 @@ Route::get('/review', function () {
     // return $reviewArr;
     // $items = Restaurant::with('reviews')->get();
     // dd($items);
+    // \DB::statement("SET SQL_MODE=''");
+
+    // $views = DB::table('reviews')
+    //     ->join('restaurants', 'reviews.res_id', '=', 'restaurants.id')
+    //     ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.res_id')->get()->toArray();
+
+    // return $views;
+    $userId = User::select('id')->where('name', session('name'))->first();
     \DB::statement("SET SQL_MODE=''");
 
-    $views = DB::table('reviews')
-        ->join('restaurants', 'reviews.res_id', '=', 'restaurants.id')
-        ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.res_id')->get()->toArray();
-
-    return $views;
+    $items = User::find($userId['id'])->restaurants;
+    dd($items[0]->id);
 
 });

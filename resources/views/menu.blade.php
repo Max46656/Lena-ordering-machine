@@ -6,17 +6,42 @@
             <a href="{{ route('CartPage') }}"><button>目前購物車</button></a>
         </div>
         <div class="container">
-          <div class="row justify-content-between">
+            <div class="col justify-content-between">
+                <div class="container">
+                    <div class="row justify-content-between">
 
-          </div>
-            <h1> 店名:{{ $res->name }}</h1>
-            <h3> 平均:{{ $res->rate }}★</h3>
-            <h2>評論:</h2>
-            @foreach ($reviews as $review)
+                        <div class="col-3">
+                            <h1> 店名:{{ $res->name }}</h1>
+                        </div>
+                        <div class="col-3" style="border: none;">
+                            @php
+                                $resArr = $resId . $userId['id'];
+                            @endphp
+                            @if (!in_array($resArr, $favoriteArr))
+                                <form action="{{ url('addFavoriteRestaurant') }}" method="get">
+                                    <input type="hidden" name="favorite" value="{{ $res->id }}">
+                                    <button id="heart"
+                                        style="border: none; font-size: 60px; background: none; color:gray;">❤</button>
+                                </form>
+                            @else
+                                <form action="{{ url('deleteFavoriteRestaurant') }}" method="get">
+                                    <input type="hidden" name="favorite" value="{{ $res->id }}">
+                                    <button id="heart"
+                                        style="border: none; font-size: 60px; background: none; color:red">❤</button>
+                                </form>
+                            @endif
 
-            <h2>{{$review->comment}}</h2>
-            <hr>
-            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <h3> 平均:{{ $res->rate }}★</h3>
+                <h2>評論:</h2>
+                @foreach ($reviews as $review)
+                    <h2>{{ $review->comment }}</h2>
+                    <hr>
+                @endforeach
+            </div>
+
         </div>
         @php
             if (\Cart::session(Auth::user()->id)->getTotal() == 0) {
@@ -70,4 +95,5 @@
     <canvas id="live2d" width="220" height="250" class="live2d"></canvas>
   </div>
 </div> --}}
+
 @endsection

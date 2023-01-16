@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Restaurant;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -64,5 +66,9 @@ class User extends \TCG\Voyager\Models\User
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    public function restaurants()
+    {
+        return $this->belongsToMany(Restaurant::class);
     }
 }

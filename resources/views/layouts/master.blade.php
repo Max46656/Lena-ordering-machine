@@ -43,6 +43,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto  text-center">
 
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/favoriteRestaurant') }}">我的最愛</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/') }}">餐廳</a>
                     </li>
