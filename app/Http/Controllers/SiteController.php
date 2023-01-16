@@ -22,7 +22,6 @@ class SiteController extends Controller
             ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.restaurant_id')->orderBy('avg', 'desc')->paginate(12);
         $reviews = Review::get();
         foreach ($reviews as $review) {
-            # code...
             array_push($reviewArr, $review->restaurant_id . $review->user_id);
         }
         return view('index', compact('items', 'reviews', 'userId', 'reviewArr'));
@@ -70,48 +69,6 @@ class SiteController extends Controller
         flash('你已經點過了’!!')->error();
         $items = Restaurant::get();
         return view('index', compact('items'));
-
-    }
-    public function evaluate($id)
-    {
-        $restaurant = Restaurant::find($id);
-        return view('evaluate', compact('restaurant'));
-    }
-    public function editEvaluate($restaurant_id, $user_id)
-    {
-        $review = Review::where('restaurant_id', $restaurant_id)->where('user_id', $user_id)->first();
-        return view('editEvaluate', compact('review'));
-    }
-    public function updateEvaluate(Request $request, $restaurant_id, $user_id)
-    {
-        $review = Review::where('restaurant_id', $restaurant_id)->where('user_id', $user_id)->first();
-        $review->rate = $request->rate;
-        $review->comment = $request->comment;
-        $review->save();
-        return redirect(url('/'));
-
-    }
-    public function storeEvaluate(Request $request)
-    {
-        // dd($request->all());
-        $userId = User::select('id')->where('name', session('name'))->first();
-
-        $review = new Review;
-        $review->user_id = $userId['id'];
-        $review->restaurant_id = $request->id;
-        $review->comment = $request->comment;
-        $review->rate = $request->rate;
-        $review->save();
-        $items = Restaurant::get();
-        return redirect(url('/'));
-
-    }
-    public function addFavouriteRestaurant(Request $request)
-    {
-
-    }
-    public function deleteFavouriteRestaurant()
-    {
 
     }
 

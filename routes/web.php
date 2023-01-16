@@ -47,16 +47,17 @@ Route::middleware([
         Route::get('/getOrder', 'SiteController@getOrder');
         Route::get('/wrongMenu', 'SiteController@wrongMenu');
         Route::get('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
-        Route::get('/evaluate/{id}', 'SiteController@evaluate');
-        Route::post('/storeEvaluate', 'SiteController@storeEvaluate');
-        Route::get('/editEvaluate/{restaurant_id}/{user_id}', 'SiteController@editEvaluate');
-        Route::post('/updateEvaluate/{restaurant_id}/{user_id}', 'SiteController@updateEvaluate');
         Route::get('/searchRestaurant', 'SiteController@searchRestaurant');
-        Route::get('/addFavouriteRestaurant', 'SiteController@addFavouriteRestaurant');
-        Route::get('/deleteFavouriteRestaurant', 'SiteController@deleteFavouriteRestaurant');
 
     });
-
+    Route::namespace ('App\Http\Controllers')->group(function () {
+        Route::get('/evaluate/{id}', 'EvaluateController@evaluate');
+        Route::post('/storeEvaluate', 'EvaluateController@storeEvaluate');
+        Route::get('/editEvaluate/{res_id}/{user_id}', 'EvaluateController@editEvaluate');
+        Route::post('/updateEvaluate/{res_id}/{user_id}', 'EvaluateController@updateEvaluate');
+        Route::get('/addFavoriteRestaurant', 'EvaluateController@addFavoriteRestaurant');
+        Route::get('/deleteFavoriteRestaurant', 'EvaluateController@deleteFavoriteRestaurant');
+    });
 });
 Route::namespace ('App\Http\Controllers')->group(function () {
     Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
@@ -70,7 +71,6 @@ Route::namespace ('App\Http\Controllers')->group(function () {
     Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
     Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
     Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
-
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -79,15 +79,12 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/session', function (Request $request) {
     return $request->session()->all();
 });
-Route::get('/carbon', function () {
-    return date('y-m-d');
-});
 Route::get('/review', function () {
     // $reviewArr = [];
     // $reviews = Review::get();
     // foreach ($reviews as $review) {
     //     # code...
-    //     array_push($reviewArr, $review->restaurant_id . $review->user_id);
+    //     array_push($reviewArr, $review->res_id . $review->user_id);
     // }
 
     // return $reviewArr;
@@ -96,8 +93,8 @@ Route::get('/review', function () {
     \DB::statement("SET SQL_MODE=''");
 
     $views = DB::table('reviews')
-        ->join('restaurants', 'reviews.restaurant_id', '=', 'restaurants.id')
-        ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.restaurant_id')->get()->toArray();
+        ->join('restaurants', 'reviews.res_id', '=', 'restaurants.id')
+        ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.res_id')->get()->toArray();
 
     return $views;
 
