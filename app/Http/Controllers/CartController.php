@@ -36,6 +36,7 @@ class CartController extends Controller
                 'name' => $request->name[$i],
                 'price' => intval($request->price[$i]),
                 'quantity' => intval($request->quantity[$i]),
+                'attributes' => $request->note,
                 'associatedModel' => $Restaurant,
             ]);
         }
@@ -100,7 +101,7 @@ class CartController extends Controller
         $menus = DB::table('item_users')
             ->join('items', 'item_users.item_id', '=', 'items.id')
             ->join('users', 'item_users.user_id', '=', 'users.id')
-            ->select('items.price', 'users.name', 'item_users.qty', 'items.name as dish')->whereBetween('item_users.created_at', [$dateFrom, $dateEnd])->get()->toArray();
+            ->select('items.price', 'users.name', 'item_users.qty', 'items.name as dish')->whereBetween('item_users.created_at', [$dateFrom, $dateEnd])->orderBy('item_users.user_id')->get()->toArray();
         return view('totalCart', compact('menus', 'restaurant'));
     }
 }

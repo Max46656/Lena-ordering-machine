@@ -17,4 +17,8 @@ class Review extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+    public function getReviewUserRestaurantAttribute()
+    {
+        return $this->User . $this->Restaurant;
+    }
 }

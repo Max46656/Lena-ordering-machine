@@ -18,7 +18,14 @@ class Restaurant extends Model
         return $this->hasMany(Review::class);
     }
     public function getRateAttribute()
-    {
-        return array_sum($this->Review->rate) / count($this->Reviews);
+    {$restaurantReviews = $this->reviews;
+        $sum = 0;
+        $num = 0;
+        foreach ($restaurantReviews as $review) {
+            # code...
+            $num++;
+            $sum += $review->rate;
+        }
+        return $sum / $num;
     }
 }

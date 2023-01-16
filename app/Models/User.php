@@ -61,4 +61,8 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->belongsToMany(Item::class);
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

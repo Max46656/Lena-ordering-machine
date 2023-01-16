@@ -1,7 +1,11 @@
 <?php
+
 use Carbon\Carbon;
+use App\Models\Review;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,24 +46,33 @@ Route::middleware([
         Route::get('/menu/{id}', 'SiteController@getMenu')->name('getMenu');
         Route::get('/getOrder', 'SiteController@getOrder');
         Route::get('/wrongMenu', 'SiteController@wrongMenu');
-        Route::get('/oreadyOrder', 'SiteController@oreadyOrder')->name('oreadyOrder');
+        Route::get('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
+        Route::get('/evaluate/{id}', 'SiteController@evaluate');
+        Route::post('/storeEvaluate', 'SiteController@storeEvaluate');
+        Route::get('/editEvaluate/{restaurant_id}/{user_id}', 'SiteController@editEvaluate');
+        Route::post('/updateEvaluate/{restaurant_id}/{user_id}', 'SiteController@updateEvaluate');
+        Route::get('/searchRestaurant', 'SiteController@searchRestaurant');
+        Route::get('/addFavouriteRestaurant', 'SiteController@addFavouriteRestaurant');
+        Route::get('/deleteFavouriteRestaurant', 'SiteController@deleteFavouriteRestaurant');
 
     });
-    Route::namespace ('App\Http\Controllers')->group(function () {
-        Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
-        Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
-    });
-    Route::namespace ('App\Http\Controllers')->group(function () {
-        Route::get('/cart', 'CartController@cartPage')->name('CartPage');
-        Route::post('/addCart', 'CartController@addCart')->name('addCart');
-        Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
-        Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
-        Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
-        Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
-        Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
 
-    });
 });
+Route::namespace ('App\Http\Controllers')->group(function () {
+    Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
+    Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
+});
+Route::namespace ('App\Http\Controllers')->group(function () {
+    Route::get('/cart', 'CartController@cartPage')->name('CartPage');
+    Route::post('/addCart', 'CartController@addCart')->name('addCart');
+    Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
+    Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
+    Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
+    Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
+    Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
+
+});
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
@@ -68,4 +81,24 @@ Route::get('/session', function (Request $request) {
 });
 Route::get('/carbon', function () {
     return date('y-m-d');
+});
+Route::get('/review', function () {
+    // $reviewArr = [];
+    // $reviews = Review::get();
+    // foreach ($reviews as $review) {
+    //     # code...
+    //     array_push($reviewArr, $review->restaurant_id . $review->user_id);
+    // }
+
+    // return $reviewArr;
+    // $items = Restaurant::with('reviews')->get();
+    // dd($items);
+    \DB::statement("SET SQL_MODE=''");
+
+    $views = DB::table('reviews')
+        ->join('restaurants', 'reviews.restaurant_id', '=', 'restaurants.id')
+        ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.restaurant_id')->get()->toArray();
+
+    return $views;
+
 });
