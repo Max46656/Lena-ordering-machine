@@ -18,6 +18,7 @@
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link rel="shortcut icon" href="imge/agyop-qczih-001.ico" type="image/x-icon" />
   <title>Resume</title>
+  @livewireStyles
 </head>
 
 <body data-spy="scroll" data-target="#navspy" data-offset="100">
@@ -197,6 +198,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
   </script>
+@livewireScripts
 </body>
 
 </html>

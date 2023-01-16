@@ -4,6 +4,9 @@
   <div class="col-12 text-center" style="margin: 30px 0 3px 0;">
     <a href="{{ route('addRes') }}"><button type="button" class="btn btn-primary">新增餐廳</button></a>
     <a href="{{ route('addMenu') }}"><button type="button" class="btn btn-warning">編輯菜單</button></a>
+    @foreach ($name as $index)
+    <p><b>今日值日生:<body>{{$index->name}}</body></b></p>
+    @endforeach
   </div>
   <div class="col-12">
     <hr>

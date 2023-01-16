@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\User;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class SiteController extends Controller
     public function index()
     {
         $items = Restaurant::get();
-        return view('index', compact('items'));
+        $name=User::orderBy('id','asc')->get();
+        return view('index', compact('items','name'));
     }
 
     public function getMenu($id)

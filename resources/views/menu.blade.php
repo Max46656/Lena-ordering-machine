@@ -12,7 +12,7 @@
   $fromAction=route('updateCart');
   }
   @endphp
-  <div class="card-body">
+ <div class="card-body">
     <form action="{{ $fromAction }}" method="post">
       <input type="hidden" name="resId" value="{{$resId}}">
       @csrf
@@ -20,24 +20,26 @@
         <thead>
           <tr>
             <th>#</th>
+            <th>編號</th>
             <th>名字</th>
             <th>價格</th>
-            <th>數量</th>
-          </tr>
+            <th>訂購數量</th>
+            </tr>
         </thead>
         <tbody>
           @foreach ($items as $menu)
-          <tr>
+         <tr>
             <th><img src="{{ url(Voyager::image($menu->cover)) }}" class="img-fluid" alt="" srcset=""
                 style="width: 100px; height: auto" /></th>
             <th><input type="number" name="id[]" value="{{$menu->id}}" style="display:none">{{$menu->id}}</th>
             <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>
             <th><input type="number" name="price[]" value="{{$menu->price}}" style="display:none">{{$menu->price}}</th>
             <th><input type="number" name="quantity[]" id=""></th>
-          </tr>
-          @endforeach
-
+            @endforeach
         </tbody>
+        <tr>
+
+        </tr>
       </table>
       <button type="submit" class="btn btn-primary container">送出</button>
     </form>
