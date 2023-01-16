@@ -21,4 +21,17 @@ class Restaurant extends Model
     {
         return array_sum($this->Review->rate) / count($this->Reviews);
     }
+    public function todayRestaurant()
+    {
+        return $this->hasMany(TodayRestaurant::class);
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function tags(){
+        return $this->belongsToMany(Tag::class)->withTimestamps()->withPivot('color');
+    }
+    
+
 }

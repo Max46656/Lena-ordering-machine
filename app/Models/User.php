@@ -61,4 +61,11 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->belongsToMany(Item::class);
     }
+    public function ondutys()
+    {
+        return $this->belongsToMany(OnDuty::class);
+    }
+    public function restaurant(){
+        return $this->belongsToMany(Restaurant::class);
+    }
 }

@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ItemSeeder::class,
             RestaurantSeeder::class,
+            RestaurantTagSeeder::class,
+            TagSeeder::class,
+           
         ]);
 //enable foreign key check for this connection before running seeders
         $this->setFKCheckOn();
