@@ -144,6 +144,9 @@ return [
         ],
 
         'widgets' => [
+            App\Widgets\UserDimmer::class,
+            App\Widgets\OrderDimmer::class,
+
 
         ],
 

@@ -18,15 +18,23 @@ class SiteController extends Controller
         $userId = User::select('id')->where('name', session('name'))->first();
         $reviewArr = [];
         \DB::statement("SET SQL_MODE=''");
+        $newItems = DB::table('restaurants')
+            ->leftJoin('reviews', 'reviews.restaurant_id', '=', 'restaurants.id')
+            ->select('restaurants.*')
+            ->whereNull('rate')
+            ->orderByDesc('created_at')
+            ->paginate(12);
         $items = DB::table('reviews')
             ->join('restaurants', 'reviews.restaurant_id', '=', 'restaurants.id')
-            ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.restaurant_id')->orderBy('avg', 'desc')->paginate(12);
-
+            ->select('restaurants.*', DB::raw('avg(rate)as avg'))
+            ->groupBy('reviews.restaurant_id')
+            ->orderBy('avg', 'desc')
+            ->paginate(12);
         $reviews = Review::get();
         foreach ($reviews as $review) {
             array_push($reviewArr, $review->restaurant_id . $review->user_id);
         }
-        return view('index', compact('items', 'reviews', 'userId', 'reviewArr'));
+        return view('index', compact('newItems', 'items', 'reviews', 'userId', 'reviewArr'));
     }
 
     public function searchRestaurant(Request $request)

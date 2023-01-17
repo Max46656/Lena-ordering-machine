@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('restaurant_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string("note");
+            $table->foreignId('restaurant_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
+            $table->string('color')->default('#FFFFFF');
             $table->timestamps();
         });
     }
@@ -28,9 +29,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+        Schema::table('restaurant_tag', function (Blueprint $table) {
+            $table->dropForeign(['restaurant_id']);
+            $table->dropForeign(['tag_id']);
+            
         });
-        Schema::dropIfExists('orders');
+
+        Schema::dropIfExists('restaurant_tag');
     }
 };

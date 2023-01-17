@@ -18,7 +18,7 @@ class Restaurant extends Model
     }
     public function reviews()
     {
-        return $this->hasMany(Review::class);
+        return $this->belongsToMany(Review::class);
     }
     public function users()
     {
@@ -37,5 +37,13 @@ class Restaurant extends Model
             $num = 1;
         }
         return $sum / $num;
+    }
+    public function todayRestaurant()
+    {
+        return $this->hasMany(TodayRestaurant::class);
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps()->withPivot('color');
     }
 }
