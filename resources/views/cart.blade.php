@@ -21,18 +21,17 @@
 
     <!-- CSS -->
     <style>
-        .page {
+        /* .page {
             display: inline-flex;
             justify-content: center;
-        }
+        } */
 
-        form {
-            width: 500px;
-            margin: 2rem 0;
+        /* form {
+         
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
+            align-items: center; 
+        } */
 
         input,
         textarea {
@@ -50,61 +49,77 @@
             margin: 5rem 0;
             text-align: center;
         }
+        .header_select{
+            border-bottom: 2px solid rgb(188, 186, 186);
+        }
+        .from_order_margin{
+            margin-top:15%;
+           
+        }
     </style>
 </head>
 
 <body>
+<div class="container">
 
-
-    <div>
-
-        <a href="{{ route('index') }}"><button>回首頁</button></a>
+    <div class="header_select my-5 pb-4">
+    
+        <a href="{{ route('index') }}"><button class="btn btn-outline-dark">回首頁</button></a>
         @if (empty(session('used')))
-            <a href="{{ route('clearCart') }}"><button>清除購物車</button></a>
-            <a href="{{ url()->previous() }}"><button>回菜單修改</button></a>
+            <a class="ml-3" href="{{ route('clearCart') }}"><button class="btn btn-outline-dark">清除購物車</button></a>
+            <a  class="ml-3" href="{{ url()->previous() }}"><button class="btn btn-outline-dark">回菜單修改</button></a>
         @endif
     </div>
-    <form action="{{ route('storeCart') }}" method="get">
+    <form  class ="from_order_margin col-6" style="font-size:px;  font-weight:500;" action="{{ route('storeCart') }}" method="get">
         @csrf
         <table>
             <tbody>
                 @php
                     $content = '';
                 @endphp
+
                 @foreach ($cart as $item)
                     <tr>
+                        
                         <td>
-                            名稱:{{ $item->name }}<br>
-                            價格:{{ $item->price }}<br>
-                            數量:{{ $item->quantity }}<br>
-                            小記:{{ $item->quantity * $item->price }}<br>
+                            
+                            <p>名稱:{{ $item->name }}</p>
+                                
+                            <p>價格:{{ $item->price }}</p>
+                                
+                                <p>數量:{{ $item->quantity }}</p>
+                                
+                                    <p>小記:{{ $item->quantity * $item->price }}</p>
                         </td>
+                            
+                        
                     </tr>
                     @php
-                        $content .= '名稱:' . $item->name . '。';
-                        $content .= '價格:' . $item->price . '。';
-                        $content .= '數量:' . $item->quantity . '。';
-                        $content .= '小記:' . $item->quantity * $item->price . '。';
-                        $content .= '<br>';
+                       echo $content .= '名稱:' . $item->name . '。 <br>'  ;
+                       echo $content .= '價格:' . $item->price . '。 <br>';
+                       echo $content .= '數量:' . $item->quantity . '。 <br>';
+                       echo $content .= '小記:' . $item->quantity * $item->price . '。 <br>';
+                        
                     @endphp
+                     <br>
                     <input type="hidden" name="item_id[]" value="{{ $item->id }}">
                     <input type="hidden" name="quantity[]" value="{{ $item->quantity }}">
                 @endforeach
                 @php
                     $content .= '總額:' . $total . '。';
-                    $content .= '<br>';
+                    // $content .= '<br>';
                     $content .= '點餐時間' . date('h:i:sa') . '。';
                 @endphp
-                <tr>
+                <tr >
                     <td>總價{{ $total }}</td>
                 </tr>
             </tbody>
         </table>
         @if (empty(session('used')))
-            <button>確認訂單</button>
+            <button class="mt-5 btn btn-outline-dark"">確認訂單</button>
         @endif
     </form>
-    <div class="container-fluid page">
+    <div class="col-6 mt-5">
         <form class="form-group" id="Order">
             <div class="title">Order</div>
             <input class="form-control" type="text" name="name" value="{{ $name }}"
@@ -112,14 +127,16 @@
             <input class="form-control" type="text" name="email" value="{{ $email }}"
                 style="display:none" />
             <textarea class="form-control" name="content" style="display:none" />{{ $content }}</textarea>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" style="font-size:20px">
                 Send
                 <i class="fa fa-spinner fa-spin"></i>
             </button>
         </form>
-
+    <br>
         <div class="success">Thank you for your Order!</div>
     </div>
+</div>
+
 </body>
 
 <script>
