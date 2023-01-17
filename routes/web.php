@@ -62,11 +62,12 @@ Route::middleware([
         Route::get('/addFavoriteRestaurant', 'FavoriteController@addFavoriteRestaurant');
         Route::get('/deleteFavoriteRestaurant', 'FavoriteController@deleteFavoriteRestaurant');
         Route::get('/favoriteRestaurant', 'FavoriteController@favoriteRestaurant');
-
     });
 
 });
 Route::namespace ('App\Http\Controllers')->group(function () {
+    Route::get('/HiAdmin', function () {
+        return view('admin');})->name('admin');
     Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
     Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
 });

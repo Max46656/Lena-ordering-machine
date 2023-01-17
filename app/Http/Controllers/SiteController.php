@@ -12,10 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $userId = User::select('id')->where('name', session('name'))->first();
-        $reviewArr = [];
+        if ($userId == null) {
+            return redirect(route("admin"));
+        }
+        // $admin = new AdminController;
+        // $user = User::find($userId);
+        // $isAdmin = $admin->isAdmin($user[0]->role_id);
         \DB::statement("SET SQL_MODE=''");
         $newItems = DB::table('restaurants')
             ->leftJoin('reviews', 'reviews.restaurant_id', '=', 'restaurants.id')
@@ -29,13 +34,13 @@ class SiteController extends Controller
             ->groupBy('reviews.restaurant_id')
             ->orderBy('avg', 'desc')
             ->paginate(12);
+        $reviewArr = [];
         $reviews = Review::get();
         foreach ($reviews as $review) {
             array_push($reviewArr, $review->restaurant_id . $review->user_id);
         }
         return view('index', compact('newItems', 'items', 'reviews', 'userId', 'reviewArr'));
     }
-
     public function searchRestaurant(Request $request)
     {
         $items = Restaurant::where('name', 'like', '%' . $request->search . '%')->paginate(12);
