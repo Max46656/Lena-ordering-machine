@@ -31,7 +31,9 @@ class CartController extends Controller
         $request->session()->put('restaurant', $request->resId);
 
         for ($i = 0; $i < count($request->id); $i++) {
-            // dd(settype($request->id[$i], "integer"), settype($request->name[$i], "integer"), settype($request->price[$i], "integer"), settype($request->quantity[$i], "integer"));
+            if ($request->quantity[$i] == 0) {
+                continue;
+            }
             \Cart::session(Auth::user()->id)->add([
                 'id' => intval($request->id[$i]),
                 'name' => $request->name[$i],

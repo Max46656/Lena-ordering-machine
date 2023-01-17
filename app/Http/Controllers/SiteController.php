@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
         $userId = User::select('id')->where('name', session('name'))->first();
         $reviewArr = [];
         \DB::statement("SET SQL_MODE=''");
@@ -46,7 +45,6 @@ class SiteController extends Controller
 
         $reviews = Review::get();
         foreach ($reviews as $review) {
-            # code...
             array_push($reviewArr, $review->restaurant_id . $review->user_id);
         }
         return view('index', compact('items', 'reviews', 'userId', 'reviewArr'));
@@ -58,7 +56,7 @@ class SiteController extends Controller
         $favoriteArr = [];
         $favorites = RestaurantUser::get();
         foreach ($favorites as $favorite) {
-            # code...
+
             array_push($favoriteArr, $favorite->restaurant_id . $favorite->user_id);
         }
 
@@ -80,14 +78,14 @@ class SiteController extends Controller
         $restaurant = Restaurant::find(session('restaurant'));
         flash('今天的餐廳是‘' . $restaurant->name . '’!!')->error();
         $items = Restaurant::get();
-        return view('index', compact('items'));
+        return redirect(url('/'));
 
     }
     public function alreadyOrder()
     {
         flash('你已經點過了’!!')->error();
         $items = Restaurant::get();
-        return view('index', compact('items'));
+        return redirect(url('/'));
 
     }
 
