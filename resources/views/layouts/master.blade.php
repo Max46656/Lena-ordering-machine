@@ -2,129 +2,126 @@
 <html lang="zh-Hant-TW">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/css.css') }}">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-    <link rel="shortcut icon" href="imge/agyop-qczih-001.ico" type="image/x-icon" />
-    <title>Resume</title>
-    @livewireStyles
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ asset('css/css.css') }}">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+  <link rel="shortcut icon" href="imge/agyop-qczih-001.ico" type="image/x-icon" />
+  <title>Binging with Babish</title>
+  @livewireStyles
 </head>
 
 <body data-spy="scroll" data-target="#navspy" data-offset="100">
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-            aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-    </div>
-    <div class="content">
-        <!-- BAR -->
-        <nav id="navspy" class="navbar navbar-expand-lg navbar-light sticky-top">
-            <a class="navbar-brand row" href="#">
-                <!-- <img class="col-6 p-0"src="imge/logo.gif"width="60%" height="60%" alt="" style="margin: 0 20px;"> -->
-                <img style="margin-left: 20px;width: 250px;height: 60px;" class="col-6 p-0" src="imge/hadog.png"
-                    alt="">
-            </a>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+      aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+  </div>
+  <div class="content">
+    <!-- BAR -->
+    <nav id="navspy" class="navbar navbar-expand-lg navbar-light sticky-top">
+      <a class="navbar-brand row" href="#">
+        <!-- <img class="col-6 p-0"src="imge/logo.gif"width="60%" height="60%" alt="" style="margin: 0 20px;"> -->
+        <img style="margin-left: 20px;width: 250px;height: 60px;" class="col-6 p-0" src="imge/hadog.png" alt="">
+      </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto  text-center">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto  text-center">
 
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/favoriteRestaurant') }}">我的最愛</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">餐廳</a>
-                    </li>
-                    <li class="nav-item">
-                        @if (!empty(session('restaurant'))&&empty(session('used')))
-                            <a class="nav-link" href="{{ url('menu', [session('restaurant')]) }}">今日餐廳</a>
-                        @elseif(!empty(session('used')))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/favoriteRestaurant') }}">我的最愛</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/') }}">餐廳</a>
+          </li>
+          <li class="nav-item">
+            @if (!empty(session('restaurant'))&&empty(session('used')))
+            <a class="nav-link" href="{{ url('menu', [session('restaurant')]) }}">今日餐廳</a>
+            @elseif(!empty(session('used')))
 
-                        <a class="nav-link" href="{{url('oreadyOrder')}}">今日餐廳</a>
-                        @else
-                            <a class="nav-link" href="#c">今日餐廳</a>
-                        @endif
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ url('/cart') }}">我的訂單</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ url('/totalCart') }}">今日總訂單</a>
-                    </li>
-                    <div
-                        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-1 sm:pt-0">
-                        @if (Route::has('login'))
-                            <div class="hidden fixed top-0 right-0 sm:block">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a href="{{ route('logout') }}"
-                                        class="text-sm text-gray-700 dark:text-gray-500 underline"
-                                        onclick="event.preventDefault();this.closest('form').submit();">
-                                        登出</a>
-                                </form>
-                                @auth
-                                    <a href="{{ url('/dashboard') }}"
-                                        class="text-sm text-gray-700 dark:text-gray-500 underline">{{ session('name') }}</a>
-                                @else
-                                    <a href="{{ route('login') }}"
-                                        class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+            <a class="nav-link" href="{{url('oreadyOrder')}}">今日餐廳</a>
+            @else
+            <a class="nav-link" href="#c">今日餐廳</a>
+            @endif
+          </li>
+          <li>
+            <a class="nav-link" href="{{ url('/cart') }}">我的訂單</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{{ url('/totalCart') }}">今日總訂單</a>
+          </li>
+          <div
+            class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-1 sm:pt-0">
+            @if (Route::has('login'))
+            <div class="hidden fixed top-0 right-0 sm:block">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="{{ route('logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline"
+                  onclick="event.preventDefault();this.closest('form').submit();">
+                  登出</a>
+              </form>
+              @auth
+              <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">{{
+                session('name') }}</a>
+              @else
+              <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}"
-                                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                                    @endif
-                                @endauth
-                            </div>
-                        @endif
-                </ul>
+              @if (Route::has('register'))
+              <a href="{{ route('register') }}"
+                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+              @endif
+              @endauth
             </div>
-        </nav>
+            @endif
+        </ul>
+      </div>
+    </nav>
 
-        <div class="container-fluid">
-            @yield('content')
+    <div class="container-fluid">
+      @yield('content')
 
-        </div>
-        <!-- 聯絡我 -->
-
-
-        <!-- 葉偉 -->
-        <footer class="pcolor page-f ">
-            <div class="row ">
-                <div class="col text-center">copyRight@YouMomBoom</div>
-            </div>
-        </footer>
     </div>
+    <!-- 聯絡我 -->
 
-    <div id="toTop"></div>
-    <script>
-<!-- Flash Message Overlay會用到，需保留 -->
-$('#flash-overlay-modal').modal();
 
-<!-- Flash Message 3秒之後消失，非必須 -->
-$('div.alert').delay(3000).fadeOut(350);
+    <!-- 葉偉 -->
+    <footer class="pcolor page-f ">
+      <div class="row ">
+        <div class="col text-center">copyRight@YouMomBoom</div>
+      </div>
+    </footer>
+  </div>
 
-    </script>
+  <div id="toTop"></div>
+  <script>
+    <!-- Flash Message Overlay會用到，需保留
+    -->
+    $('#flash-overlay-modal').modal();
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script>
+  <!-- Flash Message 3秒之後消失，非必須 -->
+  $('div.alert').delay(3000).fadeOut(350);
 
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
+  </script>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
             window.addEventListener('load', function() {
@@ -216,16 +213,16 @@ $('div.alert').delay(3000).fadeOut(350);
             /* .... */
 
         })();
-    </script>
+  </script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
-    </script>
-    @livewireScripts
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
+  </script>
+  @livewireScripts
 </body>
 
 </html>

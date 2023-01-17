@@ -2,6 +2,10 @@
 @section('content')
 <div class="row" id="c">
   <div class="col-12 text-center" style="margin: 30px 0 3px 0;">
+    @if ($isAdmin)
+    <a href="{{ route('addRes') }}"><button type="button" class="btn btn-primary">新增餐廳</button></a>
+    <a href="{{ route('addMenu') }}"><button type="button" class="btn btn-warning">編輯菜單</button></a>
+    @endif
     <form action="{{ url('searchRestaurant') }}" method="get">
       <p> <input type="text" name="search" id=""></p>
       <p><button>搜尋</button></p>
@@ -40,11 +44,11 @@
           style="width: 500px; height: 350px" />
         </a>
         @php
-        $resArr = $item->id . $userId['id'];
+        $resArr = $item->id . $userId;
         @endphp
         @if (in_array($resArr, $reviewArr))
         <p>
-          <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId['id']) }}">評價</a>
+          <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId) }}">評價</a>
         </p>
         @else
         <p>
@@ -72,11 +76,11 @@
         style="width: 500px; height: 350px" />
       </a>
       @php
-      $resArr = $item->id . $userId['id'];
+      $resArr = $item->id . $userId;
       @endphp
       @if (in_array($resArr, $reviewArr))
       <p>
-        <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId['id']) }}">評價</a>
+        <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId) }}">評價</a>
       </p>
       @else
       <p>

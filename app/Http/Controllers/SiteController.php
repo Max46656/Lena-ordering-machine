@@ -8,19 +8,16 @@ use App\Models\RestaurantUser;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
     public function index()
     {
-        $userId = User::select('id')->where('name', session('name'))->first();
-        if ($userId == null) {
-            return redirect(route("admin"));
-        }
-        // $admin = new AdminController;
-        // $user = User::find($userId);
-        // $isAdmin = $admin->isAdmin($user[0]->role_id);
+        $userId = Auth::user()->id;
+        $admin = new AdminController;
+        $isAdmin = $admin->isAdmin($userId);
         \DB::statement("SET SQL_MODE=''");
         $newItems = DB::table('restaurants')
             ->leftJoin('reviews', 'reviews.restaurant_id', '=', 'restaurants.id')
@@ -39,13 +36,14 @@ class SiteController extends Controller
         foreach ($reviews as $review) {
             array_push($reviewArr, $review->restaurant_id . $review->user_id);
         }
-        return view('index', compact('newItems', 'items', 'reviews', 'userId', 'reviewArr'));
+        return view('index', compact('newItems', 'items', 'reviews', 'isAdmin', 'userId', 'reviewArr'));
     }
+
     public function searchRestaurant(Request $request)
     {
         $items = Restaurant::where('name', 'like', '%' . $request->search . '%')->paginate(12);
 
-        $userId = User::select('id')->where('name', session('name'))->first();
+        $userId = Auth::user()->id;
         $reviewArr = [];
 
         $reviews = Review::get();
@@ -56,7 +54,7 @@ class SiteController extends Controller
     }
     public function getMenu($id)
     {
-        $userId = User::select('id')->where('name', session('name'))->first();
+        $userId = Auth::user()->id;
 
         $favoriteArr = [];
         $favorites = RestaurantUser::get();
