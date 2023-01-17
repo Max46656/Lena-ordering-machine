@@ -46,8 +46,8 @@ Route::middleware([
         Route::get('/', 'SiteController@index')->name('index');
         Route::get('/menu/{id}', 'SiteController@getMenu')->name('getMenu');
         Route::get('/getOrder', 'SiteController@getOrder');
-        Route::get('/wrongMenu', 'SiteController@wrongMenu');
-        Route::get('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
+        Route::post('/wrongMenu', 'SiteController@wrongMenu')->name('wrongMenu');
+        Route::post('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
         Route::get('/searchRestaurant', 'SiteController@searchRestaurant');
 
     });

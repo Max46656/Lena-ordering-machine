@@ -46,6 +46,10 @@
         @php
             if (\Cart::session(Auth::user()->id)->getTotal() == 0) {
                 $fromAction = route('addCart');
+            } elseif (session('restaurant') == $res->id && !empty(session('restaurant')) && !empty(session('used'))) {
+                $fromAction = route('alreadyOrder');
+            } elseif (session('restaurant') != $res->id && !empty(session('restaurant'))) {
+                $fromAction = route('wrongMenu');
             } else {
                 $fromAction = route('updateCart');
             }
@@ -95,5 +99,4 @@
     <canvas id="live2d" width="220" height="250" class="live2d"></canvas>
   </div>
 </div> --}}
-
 @endsection

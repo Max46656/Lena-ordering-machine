@@ -72,14 +72,14 @@ class SiteController extends Controller
         $restaurant = Restaurant::find(session('restaurant'));
         flash('今天的餐廳是‘' . $restaurant->name . '’!!')->error();
         $items = Restaurant::get();
-        return view('index', compact('items'));
+        return redirect(url('/'));
 
     }
     public function alreadyOrder()
     {
         flash('你已經點過了’!!')->error();
         $items = Restaurant::get();
-        return view('index', compact('items'));
+        return redirect(url('/'));
 
     }
 
