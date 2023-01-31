@@ -1,22 +1,62 @@
 @extends('layouts.master')
 @section('content')
 <div class="card container">
-  <div class="my-5">
-    <a class =" ml-3" href="{{ route('clearCart') }}"><button type="button" class="btn btn-outline-dark">清除購物車</button></a>
-    <a  class =" ml-3"href="{{ route('CartPage') }}"><button type="button" class="btn btn-outline-dark">目前購物車</button></a>
+  <div>
+    <a href="{{ route('clearCart') }}"><button>清除購物車</button></a>
+    <a href="{{ route('CartPage') }}"><button>目前購物車</button></a>
+  </div>
+  <div class="container">
+    <div class="col justify-content-between">
+      <div class="container">
+        <div class="row justify-content-between">
+
+          <div class="col-3">
+            <h1> 店名:{{ $res->name }}</h1>
+          </div>
+          <div class="col-3" style="border: none;">
+            @php
+            $resArr = $resId . $userId;
+            @endphp
+            @if (!in_array($resArr, $favoriteArr))
+            <form action="{{ url('addFavoriteRestaurant') }}" method="get">
+              <input type="hidden" name="favorite" value="{{ $res->id }}">
+              <button id="heart" style="border: none; font-size: 60px; background: none; color:gray;">❤</button>
+            </form>
+            @else
+            <form action="{{ url('deleteFavoriteRestaurant') }}" method="get">
+              <input type="hidden" name="favorite" value="{{ $res->id }}">
+              <button id="heart" style="border: none; font-size: 60px; background: none; color:red">❤</button>
+            </form>
+            @endif
+
+          </div>
+        </div>
+      </div>
+      <h3> 平均:{{ $res->rate }}★</h3>
+      <h2>評論:</h2>
+      @foreach ($reviews as $review)
+      <h2>{{ $review->comment }}</h2>
+      <hr>
+      @endforeach
+    </div>
+
   </div>
   @php
-  if (\Cart::session(Auth::user()->id)->getTotal()==0) {
-  $fromAction=route('addCart');
-  }else {
-  $fromAction=route('updateCart');
+  if (\Cart::session(Auth::user()->id)->getTotal() == 0) {
+  $fromAction = route('addCart');
+  } elseif (session('restaurant') == $res->id && !empty(session('restaurant')) && !empty(session('used'))) {
+  $fromAction = route('alreadyOrder');
+  } elseif (session('restaurant') != $res->id && !empty(session('restaurant'))) {
+  $fromAction = route('wrongMenu');
+  } else {
+  $fromAction = route('updateCart');
   }
   @endphp
-  <div class="card-body "">
-    <form  class="mb-5" action="{{ $fromAction }}" method="post">
-      <input type="hidden" name="resId" value="{{$resId}}">
+  <div class="card-body">
+    <form action="{{ $fromAction }}" method="post">
+      <input type="hidden" name="resId" value="{{ $resId }}">
       @csrf
-      <table class="table table-hover">
+      <table class="table">
         <thead>
           <tr>
             <th>#</th>
@@ -29,11 +69,14 @@
           @foreach ($items as $menu)
           <tr>
             <th><img src="{{ url(Voyager::image($menu->cover)) }}" class="img-fluid" alt="" srcset=""
-                style="width: 150px; height: auto" /></th>
-            <th><input type="number" name="id[]" value="{{$menu->id}}" style="display:none">{{$menu->id}}</th>
-            <th><input type="hidden" name="name[]" id="" value="{{$menu->name}}">{{$menu->name}}</th>
-            <th><input type="number" name="price[]" value="{{$menu->price}}" style="display:none">{{$menu->price}}</th>
-            <th><livewire:counter /></th>
+                style="width: 100px; height: auto" /></th>
+            <th><input type="number" name="id[]" value="{{ $menu->id }}" style="display:none">{{ $menu->id }}</th>
+            <th><input type="hidden" name="name[]" id="" value="{{ $menu->name }}">{{ $menu->name }}</th>
+            <th><input type="number" name="price[]" value="{{ $menu->price }}" style="display:none">{{ $menu->price }}
+            </th>
+            <th>
+              <livewire:counter />
+            </th>
           </tr>
           @endforeach
 

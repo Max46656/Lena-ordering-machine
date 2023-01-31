@@ -25,11 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/Duty', function () {
-    $allPerson = ['bgirl0123456789@gmail.com' => 0, 'maxfromsea36@gmail.com' => 1];
-    $PersonOnDuty = array_rand($allPerson);
-
-    return dd($PersonOnDuty);
+Route::get('/mail', function () {
+    return view('email.feedback');
 });
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

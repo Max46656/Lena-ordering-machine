@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('restaurant_id')->constrained('restaurants');
             $table->integer('rate');
-            $table->string('comment');
+            $table->string('comment')->default("所以我說那個醬汁呢？");
             $table->timestamps();
         });
     }

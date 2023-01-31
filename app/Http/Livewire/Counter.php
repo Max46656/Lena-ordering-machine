@@ -16,10 +16,6 @@ class Counter extends Component
     public function decrement()
     {
         $this->count--;
-        if ($this->count < 0) {
-            $this->count++;
-        }
-
     }
 
     public function render()

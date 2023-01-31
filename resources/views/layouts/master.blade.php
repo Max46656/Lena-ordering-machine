@@ -54,7 +54,7 @@
             <a class="nav-link" href="{{ url('menu', [session('restaurant')]) }}">今日餐廳</a>
             @elseif(!empty(session('used')))
 
-            <a class="nav-link" href="{{url('oreadyOrder')}}">今日餐廳</a>
+            <a class="nav-link" href="{{url('alreadyOrder')}}">今日餐廳</a>
             @else
             <a class="nav-link" href="#c">今日餐廳</a>
             @endif

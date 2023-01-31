@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\ItemUser;
+use App\Models\ItemOrder;
 use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
@@ -95,14 +95,17 @@ class CartController extends Controller
         $request->session()->put('used', session('name'));
 
         $userId = User::select('id')->where('name', session('name'))->first();
-        $OrderId = Order::select('id')->where('users', session('users'))->first();
+        // $OrderId = Order::select('id')->where('user_id', session('users'))->first();
+        $Order = new Order;
+        $OrderId = $Order->user_id = $userId['id'];
+        $Order->save();
+        // dd($Order);
         for ($i = 0; $i < count($request->item_id); $i++) {
-
-            $item_user = new ItemUser;
-            $item_user->user_id = $userId['id'];
-            $item_user->item_id = $request->item_id[$i];
-            $item_user->qty = $request->quantity[$i];
-            $item_user->save();
+            $item_order = new ItemOrder;
+            $item_order->order_id = $OrderId;
+            $item_order->item_id = $request->item_id[$i];
+            $item_order->qty = $request->quantity[$i];
+            $item_order->save();
             return redirect(url('totalCart'));
         }
     }
@@ -112,13 +115,13 @@ class CartController extends Controller
         $dateEnd = date('Y-m-d') . ' 23:59:59';
         $restaurant = Restaurant::find(session('restaurant'));
         // $subTotal=ItemUser::select(DB::raw('sum()'))
-        $menus = DB::table('order')
-            ->join('users', 'order.user_id', '=', 'users.id')
-            ->join('item_order', 'item_order.order_id', '=', 'order.id')
+        $menus = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->join('item_order', 'item_order.order_id', '=', 'orders.id')
             ->join('items', 'item_order.item_id', '=', 'items.id')
 
             ->select('items.price', 'users.name', 'item_order.qty', 'items.name as dish')
-            ->whereBetween('order.created_at', [$dateFrom, $dateEnd])->get()->toArray();
+            ->whereBetween('orders.created_at', [$dateFrom, $dateEnd])->get()->toArray();
         return view('totalCart', compact('menus', 'restaurant'));
     }
 }

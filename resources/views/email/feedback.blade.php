@@ -76,7 +76,7 @@
     $('#feedback').submit(function(event){
         event.preventDefault();
         $('.fa-spin').show();
-        $.post('{{ url("/api/sendmail") }}',$("#feedback").serialize(),function(data){
+        $.post("{{ route('sendmail') }}",$("#feedback").serialize(),function(data){
             $('#feedback').hide();
             $('.success').show();
         })

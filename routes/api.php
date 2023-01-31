@@ -18,7 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/sendmail', 'App\Http\Controllers\Api\MailController@sendMail')->name('sendMail');
+Route::post('/sendmail', 'App\Http\Controllers\Api\MailController@sendMail')->name('sendmail');
+
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),
