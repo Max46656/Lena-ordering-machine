@@ -1,98 +1,37 @@
 @extends('layouts.master')
 @section('content')
-<div class="row" id="c">
-  <div class="col-12 text-center" style="margin: 30px 0 3px 0;">
+<div class="" id="c">
+  <div class=" select_data flex justify-center" style="padding-top:160px" >
     @if ($isAdmin)
-    <a href="{{ route('addRes') }}"><button type="button" class="btn btn-primary">新增餐廳</button></a>
-    <a href="{{ route('addMenu') }}"><button type="button" class="btn btn-warning">編輯菜單</button></a>
+    <div class="add-edit py-4 ">
+      <a href="{{ route('addRes') }}"><button type="button" class="btn py-3 px-6  mx-4 bg-blue-300 hover:bg-blue-400  rounded-lg" >新增餐廳</button></a>
+      <a href="{{ route('addMenu') }}"><button type="button" class="btn py-3 px-6 mx-4 bg-yellow-200  hover:bg-yellow-300 rounded-lg">編輯菜單</button></a>
+    </div>
     @endif
-    <form action="{{ url('searchRestaurant') }}" method="get">
-      <p> <input type="text" name="search" id=""></p>
-      <p><button>搜尋</button></p>
+    <form class="flex py-4 px-6  mx-4 " action="{{ url('searchRestaurant') }}" method="get">
+      <p> <input  type="text"  class="btn" name="search" id=""></p>
+      <p><button type="button" class="btn py-3 px-6  mx-4 bg-blue-300 hover:bg-blue-400  rounded-lg">搜尋</button></p>
     </form>
   </div>
-  <div class="col-12">
+  <div class="">
     @include('flash::message')
     <hr>
   </div>
 </div>
-<div class="pcolor row justify-content-center" style="color: white;">
-  <div class="row justify-content-center pt-4" style="width:1200px;">
+<div class=" container mx-auto  " style="" >
+  <div class="flex flex-wrap ">
     @foreach ($items as $item)
-    <div style="
-                max-width: 500px;
-                max-height: 360px;
-                visibility: visible;
-                animation-name: hinge;" class="col-12 col-md-6 text-center wow hinge">
+    <div class="card_content mx-auto my-8"  >
       @if (session('restaurant') == $item->id && !empty(session('restaurant')))
-      <div class="pro mb-4" style="border:solid red 5px">
-        <div class="spro">
-          <a href="{{ route('getMenu', ['id' => $item->id]) }}">
-            <p>
-              {{ $item->name }}
-            </p>
-            <p>
-              {{-- url('/menu/'.$item->id) --}}
-              電話:{{ $item->tel }}
-            </p>
-            <p>
-              地址:{{ $item->address }}
-            </p>
-          </a>
-          @php
-          $resArr = $item->id . $userId;
-          @endphp
-          @if (in_array($resArr, $reviewArr))
-          <p>
-            <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId) }}">評價</a>
-          </p>
-          @else
-          <p>
-            <a href="{{ url('evaluate/' . $item->id) }}">評價</a>
-          </p>
-          @endif
-        </div>
-        <img src="{{ url(Voyager::image($item->cover)) }}" class="img-fluid" alt="" srcset=""
-          style="width: 500px; height: 350px" />
-      </div>
-    </div>
+      @include('inculd.index._haveToday_already')
     @else
-    <div class="pro mb-4">
-      <div class="spro">
-        <a href="{{ route('getMenu', ['id' => $item->id]) }}">
-          <p>
-            {{ $item->name }}
-          </p>
-          <p>
-            {{-- url('/menu/'.$item->id) --}}
-            電話:{{ $item->tel }}
-          </p>
-          <p>
-            地址:{{ $item->address }}
-          </p>
-        </a>
-      </div>
-      <img src="{{ url(Voyager::image($item->cover)) }}" class="img-fluid" alt="" srcset=""
-        style="width: 500px; height: 350px" />
-
-      @php
-      $resArr = $item->id . $userId;
-      @endphp
-      @if (in_array($resArr, $reviewArr))
-      <p>
-        <a href="{{ url('editEvaluate/' . $item->id . '/' . $userId) }}">評價</a>
-      </p>
-      @else
-      <p>
-        <a href="{{ url('evaluate/' . $item->id) }}">評價</a>
-      </p>
-      @endif
-
-    </div>
-  </div>
+    @include('inculd.index._default')
   @endif
   @endforeach
-</div>
-</div>
-{{ $items->links() }}
+  </div>
+
+  </div>
+
+{{ $items->links('vendor.pagination.tailwind') }}
 @endsection
+</div>

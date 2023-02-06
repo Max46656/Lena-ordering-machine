@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  @vite('resources/css/app.css')
   <title>Order</title>
 
   <!-- Bootstrap CDN-->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
 
   <!-- Jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -55,13 +56,14 @@
 
 <body>
 
-
+<div class="container mx-auto pt-8" >
+<div class=" pt-8 " style=" ">
   <div>
 
-    <a href="{{ route('index') }}"><button>回首頁</button></a>
+    <a href="{{ route('index') }}"><button type="button" class="btn py-3 px-6 my-4 ml-8 bg-blue-300 hover:bg-blue-400  active:bg-blue-600 rounded-lg">回首頁</button></a>
     @if (empty(session('used')))
-    <a href="{{ route('clearCart') }}"><button>清除購物車</button></a>
-    <a href="{{ url()->previous() }}"><button>回菜單修改</button></a>
+    <a href="{{ route('clearCart') }}"><button type="button" class="btn py-3 px-6 my-4 ml-8 bg-red-300 hover:bg-red-400 active:bg-red-600 rounded-lg">清除購物車</button></a>
+    <a href="{{ url()->previous() }}"><button type="button" class="btn py-3 px-6 my-4 ml-8 bg-yellow-200 hover:bg-yellow-300 active:bg-yellow-600 rounded-lg">回菜單修改</button></a>
     @endif
   </div>
   <form action="{{ route('storeCart') }}" method="get">
@@ -110,7 +112,7 @@
       <input class="form-control" type="text" name="name" value="{{ $name }}" style="display:none" />
       <input class="form-control" type="text" name="email" value="{{ $email }}" style="display:none" />
       <textarea class="form-control" name="content" style="display:none" />{{ $content }}</textarea>
-      <button class="btn btn-primary">
+      <button class="btn py-3 px-6 my-4 ml-8 bg-blue-300 hover:bg-blue-400  active:bg-blue-600 rounded-lg">
         Send
         <i class="fa fa-spinner fa-spin"></i>
       </button>
@@ -118,6 +120,8 @@
 
     <div class="success">Thank you for your Order!</div>
   </div>
+</div>
+</div>
 </body>
 
 <script>
