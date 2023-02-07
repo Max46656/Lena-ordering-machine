@@ -119,9 +119,10 @@ class CartController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->join('item_order', 'item_order.order_id', '=', 'orders.id')
             ->join('items', 'item_order.item_id', '=', 'items.id')
-
             ->select('items.price', 'users.name', 'item_order.qty', 'items.name as dish')
-            ->whereBetween('orders.created_at', [$dateFrom, $dateEnd])->get()->toArray();
+            ->whereBetween('item_order.created_at', [$dateFrom, $dateEnd])
+            ->get()->toArray();
+        // dd($menus);
         return view('totalCart', compact('menus', 'restaurant'));
     }
 }

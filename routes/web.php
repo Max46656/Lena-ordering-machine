@@ -84,6 +84,10 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/session', function (Request $request) {
     return $request->session()->all();
 });
+Route::get('/deleteSession', function (Request $request) {
+    $request->session()->flush();
+    return redirect(url('/'));
+});
 Route::get('/review', function () {
     // $reviewArr = [];
     // $reviews = Review::get();
