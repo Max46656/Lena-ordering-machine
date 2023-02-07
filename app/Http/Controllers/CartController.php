@@ -44,7 +44,8 @@ class CartController extends Controller
             ]);
         }
         session()->flash('message', __('點餐成功'));
-        return redirect()->back()->withInput($input);
+        // return redirect()->back()->withInput($input);
+        return redirect(url('cart'));
     }
 
     public function updateCart(Request $request)

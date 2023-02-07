@@ -86,7 +86,7 @@ Route::get('/session', function (Request $request) {
 });
 Route::get('/deleteSession', function (Request $request) {
     $request->session()->flush();
-    return redirect(url('/'));
+    return redirect(route('index'));
 });
 Route::get('/review', function () {
     // $reviewArr = [];

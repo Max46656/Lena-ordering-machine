@@ -34,7 +34,7 @@
   <div class="content"> --}}
     <!-- BAR -->
     <div class="wrapper"> 
-      <div class="header fixed backdrop-opacity-0  " >
+      <div class="header fixed  opacity-90 " >
         <div class=" navbar container flex  justify-between"  >
           <div class="nav-left ">
             <div class="logo">
