@@ -5,19 +5,36 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Author -->
+  <meta name="author" content="MaxCaulfield">
+  <meta name="author" content="曾俊澄">
+  <meta name="author" content="朱翊榕">
+  <meta name="designer" content="謝婧琳">
+  <!--
+ __  __                 _____                _   __  _        _      _
+|  \/  |               / ____|              | | / _|(_)      | |    | |
+| \  / |  __ _ __  __ | |       __ _  _   _ | || |_  _   ___ | |  __| |
+| |\/| | / _` |\ \/ / | |      / _` || | | || ||  _|| | / _ \| | / _` |
+| |  | || (_| | >  <  | |____ | (_| || |_| || || |  | ||  __/| || (_| |
+|_|  |_| \__,_|/_/\_\  \_____| \__,_| \__,_||_||_|  |_| \___||_| \__,_|
+Contact me: https://github.com/Max46656
+Check readme.md for more information.
+-->
+  <!-- Tailwind CSS-->
   @vite('resources/css/app.css')
-  {{-- <link rel="stylesheet" href="css/normalize.css"> --}}
+  <link rel="stylesheet" href="{{ asset('css/css.css') }}" />
+  {{--
+  <link rel="stylesheet" href="css/normalize.css">
   <!-- Bootstrap CSS -->
-  {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> --}}
-  <link rel="stylesheet" href="{{ asset('css/css.css') }}">
-  {{-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> --}}
-  {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"> --}}
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script> --}}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- jQuery 3.2.1-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script> --}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
- 
-
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
     integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link rel="shortcut icon" href="imge/agyop-qczih-001.ico" type="image/x-icon" />
@@ -33,83 +50,83 @@
 
   <div class="content"> --}}
     <!-- BAR -->
-    <div class="wrapper"> 
-      <div class="header fixed  opacity-90 " >
-        <div class=" navbar container flex  justify-between"  >
+    <div class="wrapper">
+      <div class="header fixed  opacity-90 ">
+        <div class=" navbar container flex  justify-between">
           <div class="nav-left ">
             <div class="logo">
-              <a href="#">
-                <img  src="{{asset('imge/icon1.png')}}" alt="">
+              <a href={{route("index")}}>
+                <img src="{{asset('imge/icon1.png')}}" alt="">
               </a>
             </div>
           </div>
-          <div class="nav-right mt-8 text-gray-600" >
-          <ul>
-            <li class="nav-link">
-              <a href="{{ url('/favoriteRestaurant') }}" class="nav-item ">我的最愛</a>
-            </li>
-            <li class="nav-link ">
-              <a href="{{ url('/') }}" class="nav-item  ">餐廳</a>
-            </li>
-            <li class="nav-link ">
-              @if (!empty(session('restaurant'))&&empty(session('used')))
-                <a class="nav-link" href="{{ url('menu', [session('restaurant')]) }}">今日餐廳</a>
+          <div class="nav-right mt-8 text-gray-600">
+            <ul>
+              <li class="nav-link">
+                <a href="{{ route('addFavorite') }}" class="nav-item ">我的最愛</a>
+              </li>
+              <li class="nav-link ">
+                <a href="{{ route('index') }}" class="nav-item  ">餐廳</a>
+              </li>
+              <li class="nav-link ">
+                @if (!empty(session('restaurant'))&&empty(session('used')))
+                <a class="nav-link" href="{{route('getMenu', ['id'=>session('restaurant')]) }}">今日餐廳</a>
                 @elseif(!empty(session('used')))
-    
-                <a class="nav-link" href="{{url('alreadyOrder')}}">今日餐廳</a>
+                <a class="nav-link" href="{{route('alreadyOrder')}}">今日餐廳</a>
                 @else
                 <a class="nav-link" href="#c">今日餐廳</a>
                 @endif
-            <li class="nav-link">
-              <a href="{{ url('/cart') }}" class="nav-item ">我的訂單</a>
-            </li>
-            <li class="nav-link">
-              <a href="{{ url('/totalCart') }}" class="nav-item ">今日總訂單</a>
-            </li>
-            <li>
-              <div  class=" justify-end flex ">
+              <li class="nav-link">
+                <a href="{{ route('CartPage') }}" class="nav-item ">我的訂單</a>
+              </li>
+              <li class="nav-link">
+                <a href="{{ route('totalCart') }}" class="nav-item ">今日總訂單</a>
+              </li>
+              <li>
+                <div class=" justify-end flex ">
                   @if (Route::has('login'))
                   <div class=" ">
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{route('logout') }}">
                       @csrf
-                      <a href="{{ route('logout') }}" class="text-sm text-gray-600 hover:text-red-500 dark:text-gray-500 " style="font-size: 25px"
+                      <a href="{{ route('logout') }}"
+                        class="text-sm text-gray-600 hover:text-red-500 dark:text-gray-500 " style="font-size: 25px"
                         onclick="event.preventDefault();this.closest('form').submit();">
                         登出</a>
-                        @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 ">{{
-                          session('name') }}</a>
-                        @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 ">Log in</a>
-          
-                        @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                          class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                        @endauth
+                      @auth
+                      <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 ">{{
+                        session('name') }}</a>
+                      @else
+                      <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 ">Log in</a>
+
+                      @if (Route::has('register'))
+                      <a href="{{ route('register') }}"
+                        class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                      @endif
+                      @endauth
                     </form>
                   </div>
                   @endif
-            </li>
-              </ul>
-            </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        
-        {{-- Tailwind--------------------------- --}}
+
+        {{-- bootstrap5--------------------------- --}}
 
         {{-- <nav id="navspy" class="navbar navbar-expand-lg navbar-light sticky-top ">
           <a class="navbar-brand row" href="#">
             <!-- <img class="col-6 p-0"src="imge/logo.gif"width="60%" height="60%" alt="" style="margin: 0 20px;"> -->
-            
+
           </a>
-    
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
- 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto  text-center">
-              <li class="nav-item  text-current" style =" ">
+              <li class="nav-item  text-current" style=" ">
                 <a class="nav-link   text-red-" href="{{ url('/favoriteRestaurant') }}">我的最愛</a>
               </li>
               <li class="nav-item">
@@ -119,7 +136,7 @@
                 @if (!empty(session('restaurant'))&&empty(session('used')))
                 <a class="nav-link" href="{{ url('menu', [session('restaurant')]) }}">今日餐廳</a>
                 @elseif(!empty(session('used')))
-    
+
                 <a class="nav-link" href="{{url('alreadyOrder')}}">今日餐廳</a>
                 @else
                 <a class="nav-link" href="#c">今日餐廳</a>
@@ -146,7 +163,7 @@
                     session('name') }}</a>
                   @else
                   <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-    
+
                   @if (Route::has('register'))
                   <a href="{{ route('register') }}"
                     class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
@@ -154,33 +171,33 @@
                   @endauth
                 </div>
                 @endif
-              </ul>
-            </div>
-          </nav> --}}
-      </div>
-     
-        
-        <div class="container-fluid">
-          @yield('content')
-          <div class="tt">
-  
-            
+            </ul>
           </div>
-          
+        </nav> --}}
+      </div>
+
+
+      <div class="container-fluid">
+        @yield('content')
+        <div class="tt">
+
+
+        </div>
+
       </div>
       <!-- 聯絡我 -->
-     
-  
-      <!-- 葉偉 -->
+
+
+      <!-- 頁尾 -->
       <footer class="pcolor page-f ">
         <div class="row ">
-          <div class="col text-center">copyRight@YouMomBoom</div>
+          <div class="col text-center">copyRight@teamMaxCaulfield</div>
         </div>
       </footer>
     </div>
-  
+
     <div id="toTop"></div>
-    </div>
+  </div>
   <script>
     <!-- Flash Message Overlay會用到，需保留
     -->

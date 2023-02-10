@@ -82,17 +82,6 @@ class CartController extends Controller
     }
     public function storeCart(Request $request)
     {
-
-        // $input = $request->only(['note','users']);
-        // $order = Order::create($input);
-
-        // if(isset($order)){
-        //     $data = ['order_id' => $order->id];
-        //     return $this->makeJson(1,$data,'新增商品成功');
-        // }else{
-        //     return $this->makeJson(0,null,'新增商品失敗');
-        // }
-
         $request->session()->put('used', session('name'));
 
         $userId = User::select('id')->where('name', session('name'))->first();
@@ -107,14 +96,15 @@ class CartController extends Controller
             $item_order->item_id = $request->item_id[$i];
             $item_order->qty = $request->quantity[$i];
             $item_order->save();
-            return redirect(url('totalCart'));
         }
+        return redirect(route('totalCart'));
     }
     public function totalCart()
     {
         $dateFrom = date('Y-m-d') . ' 00:00:00';
         $dateEnd = date('Y-m-d') . ' 23:59:59';
         $restaurant = Restaurant::find(session('restaurant'));
+        // dd($restaurant);
         // $subTotal=ItemUser::select(DB::raw('sum()'))
         $menus = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
@@ -123,7 +113,10 @@ class CartController extends Controller
             ->select('items.price', 'users.name', 'item_order.qty', 'items.name as dish')
             ->whereBetween('item_order.created_at', [$dateFrom, $dateEnd])
             ->get()->toArray();
-        // dd($menus);
+        if ($menus == null) {
+            flash('還沒有人點餐!')->error();
+            return redirect(route('index'));
+        }
         return view('totalCart', compact('menus', 'restaurant'));
     }
 }

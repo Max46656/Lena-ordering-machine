@@ -1,3 +1,3 @@
-<p>This is Order from {{ $name }}</p>
-<p>Sender mail is : {{ $email }}</p>
+<p>此訂單來自 {{ $name }}</p>
+<p>該使用者的Email : {{ $email }}</p>
 <p>{!! $content !!}</p>

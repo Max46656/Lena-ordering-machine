@@ -1,12 +1,11 @@
 <?php
-
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Review;
-use App\Models\Restaurant;
+use App\Models\OnDuty;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,15 +18,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-// Route::get('/send', function () {
-//     return view('feedback');
-// });
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/mail', function () {
-    return view('email.feedback');
-});
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
@@ -40,11 +30,11 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::namespace ('App\Http\Controllers')->group(function () {
-        Route::get('/', 'SiteController@index')->name('index');
+        Route::get('/index', 'SiteController@index')->name('index');
         Route::get('/menu/{id}', 'SiteController@getMenu')->name('getMenu');
         Route::get('/getOrder', 'SiteController@getOrder');
         Route::post('/wrongMenu', 'SiteController@wrongMenu')->name('wrongMenu');
-        Route::post('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
+        Route::get('/alreadyOrder', 'SiteController@alreadyOrder')->name('alreadyOrder');
         Route::get('/searchRestaurant', 'SiteController@searchRestaurant');
 
     });
@@ -56,30 +46,27 @@ Route::middleware([
 
     });
     Route::namespace ('App\Http\Controllers')->group(function () {
-        Route::get('/addFavoriteRestaurant', 'FavoriteController@addFavoriteRestaurant');
+        Route::get('/addFavoriteRestaurant', 'FavoriteController@addFavoriteRestaurant')->name('addFavorite');
         Route::get('/deleteFavoriteRestaurant', 'FavoriteController@deleteFavoriteRestaurant');
         Route::get('/favoriteRestaurant', 'FavoriteController@favoriteRestaurant');
     });
+    Route::namespace ('App\Http\Controllers')->group(function () {
+        Route::get('/cart', 'CartController@cartPage')->name('CartPage');
+        Route::post('/addCart', 'CartController@addCart')->name('addCart');
+        Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
+        Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
+        Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
+        Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
+        Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
+    });
 
 });
+
 Route::namespace ('App\Http\Controllers')->group(function () {
     Route::get('/HiAdmin', function () {
         return view('admin');})->name('admin');
     Route::get('/add-restaurant', 'AdminController@addRestaurant')->name('addRes');
     Route::get('/add-menu', 'AdminController@addMenu')->name('addMenu');
-});
-Route::namespace ('App\Http\Controllers')->group(function () {
-    Route::get('/cart', 'CartController@cartPage')->name('CartPage');
-    Route::post('/addCart', 'CartController@addCart')->name('addCart');
-    Route::post('/updateCart', 'CartController@updateCart')->name('updateCart');
-    Route::get('/clearAllCart', 'CartController@clearAllCart')->name('clearCart');
-    Route::get('/removeCart/{item}', 'CartController@removeCart')->name('removeCart');
-    Route::get('/storeCart', 'CartController@storeCart')->name('storeCart');
-    Route::get('/totalCart', 'CartController@totalCart')->name('totalCart');
-});
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
 });
 Route::get('/session', function (Request $request) {
     return $request->session()->all();
@@ -88,27 +75,15 @@ Route::get('/deleteSession', function (Request $request) {
     $request->session()->flush();
     return redirect(route('index'));
 });
-Route::get('/review', function () {
-    // $reviewArr = [];
-    // $reviews = Review::get();
-    // foreach ($reviews as $review) {
-    //     array_push($reviewArr, $review->res_id . $review->user_id);
-    // }
-
-    // return $reviewArr;
-    // $items = Restaurant::with('reviews')->get();
-    // dd($items);
-    // \DB::statement("SET SQL_MODE=''");
-
-    // $views = DB::table('reviews')
-    //     ->join('restaurants', 'reviews.res_id', '=', 'restaurants.id')
-    //     ->select('restaurants.*', DB::raw('avg(rate)as avg'))->groupBy('reviews.res_id')->get()->toArray();
-
-    // return $views;
-    $userId = User::select('id')->where('name', session('name'))->first();
-    \DB::statement("SET SQL_MODE=''");
-
-    $items = User::find($userId['id'])->restaurants;
-    dd($items[0]->id);
+// Route::get('/mailTest', function () {
+//     return view('email.testMail');
+// });
+Route::get('/', function () {
+    if (Auth::user()) {
+        return redirect(route('index'));
+    }
+    return redirect(route("register"));
+});
+Route::get('test', function () {
 
 });

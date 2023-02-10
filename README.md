@@ -1,66 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Lena-ordering-machine
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+莉娜點餐機的目的是展示餐廳與餐點，將使用者的訂單紀錄並執行處理。
 
-## About Laravel
+## Description
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+莉娜點餐機實作了動態展示網頁畫面、前端即時更改網頁內容、後端的CRUD與界面、購物車邏輯、自動填寫email內容。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Requirement
 
-## Learning Laravel
+Laravel 9.47.0、Node v18.12.1、npm 8.19.2、Composer 2.4.4、PHP 8.1.2、mysql 15.1,MariaDB 10.4.22;
+確保你的環境版本正確或更新。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### .env Setting
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+APP_URL、APP_KEY、DB_USERNAME、DB_PASSWORD、MAIL_USERNAME、MAIL_PASSWORD，
+需要填寫為依據你環境設置的內容。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Build Setup
 
-## Laravel Sponsors
+在將專案Clone到你的本地端後使用終端機依序執行以下指令。
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```shell
+composer install
+npm install
+npm run dev
+cp .env.example .env
+php artisan key:generate
+```
 
-### Premium Partners
+注意專案小組位於時區+08:00，專案與.sql均設定為此時區。
+在MySQL中匯入"資料庫匯入\Lena-ordering-machine.sql"，
+將.env中的database設定為"Lena-ordering-machine"後，使用終端機依序執行以下指令。
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```shell
+php artisan storage:link
+php artisan voyager:admin yourAdminAccount@email.com --create
+```
+
+或使用已建立的管理員帳號以作為測試用途admin@admin.com密碼123456，測試用的一般帳號為user@user.com密碼12345678。
+僅當你在更改資料庫結構後才需要使用終端機依序執行以下指令，
+但需要注意這會重製Voyager的管理系統，其結構與內容的備份位於"資料庫匯入\Voyager.sql"
+
+```shell
+php artisan migrate:reset
+php artisan db:seed
+php artisan db:seed --class=VoyagerDatabaseSeeder
+```
+
+此外當你在開發時想測試Livewire的執行結果也需要此指令。
+
+```shell
+php artisan serve
+```
+
+## Usage
+
+### for Admin
+
+- 本專案使用Voyager管理後端CRUD，你能在"url('/admin')"中查看並管理網站的使用者、訂單、餐廳、菜單。
+- 使用Voyager建立的帳號與JetStream建立的帳號權限不同，
+僅有Voyager管理員才能直接從首頁進入新增餐廳與菜色。JetStream則是本專案的一般使用者系統，
+未登入者進入此網站時會被導向JetStream的註冊頁面，並從該頁面導向登入頁面。
+- 當你需要新增Voyager的管理員帳號時，必須使用上述建立admin@admin.com的方式。
+
+### for User
+
+- 當天的第一個使用者能夠自由選擇任意餐廳，其點完餐後在session中會儲存今日餐廳，
+之後的使用者會被限定在該餐廳中點餐。每個使用者在確定他們的訂單後個人訂單會被送入時間段內的所有訂單列表，
+讓使用者能參考其他人的訂單，並將訂單透過Email送出到值日生手中。
+
+- 使用者能給予餐廳評價或將餐廳新增到"我的最愛"，使用者們的綜合評價會影響餐廳的排序，
+而新餐廳會排在所有餐廳前。使用者也能僅檢視"我的最愛"的口袋餐廳或使用搜尋功能（現僅限使用餐廳名稱，不支援標籤搜尋）。
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 此專案的指導教授為[哥布林](https://github.com/javck)。
+- 此Demo中使用圖片來自[亜樹](https://www.pixiv.net/users/85082857)、[もみじ真魚](https://www.pixiv.net/users/7592/artworks)、[xinxindi](https://www.pixiv.net/users/62642122)等繪師，
+以上圖片均不作為且不可為商用，僅作為演示專案功能的用途。
+- 本專案由數位人員花了約70小時完成的作品，也是我們第一個完成的Laravel專案，
+感謝過程中的Stack Overflow文章與laravel官方文件。
 
-## Code of Conduct
+## Warning
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 本專案均使用[Tailwind](https://tailwindcss.com)進行排版；使用[darryldecode/cart](https://github.com/darryldecode/laravelshoppingcart)作為購物車；使用[livewire](https://laravel-livewire.com)撰寫前端即時回應；
+使用[jetStream](https://jetstream.laravel.com/2.x/introduction.html)作為一般使用者系統；使用tcg/voyager作為資料庫管理員系統。
+- 在"darryldecode/cart 4.2"，此版本存在錯誤，已使用"overrideVender"與"composer.json"進行覆寫。
+- 有關寄信系統，本專案不使用Mailables而是使用jquery整理格式並使用MailController寄出信件。
+寄信系統的設定中使用google smtp，你需要申請應用程式密碼並填入.env中。
+- 由於僅作為演示，目前值日生的隨機抽取與紀錄值日生的code為註釋狀態，僅能寄出到專案作者的信箱中。
+- 除此之外的功能與其實作方式簡述紀錄在"功能清單.ods"中。
